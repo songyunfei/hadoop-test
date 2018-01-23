@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linkGap.projectManage.dao.SysUserMapper">
+	<resultMap id="BaseResultMap" type="sysUser">
+		<id column="sysUserId" property="sysUserId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<result column="mobile" property="mobile" jdbcType="VARCHAR" />
+		<result column="realName" property="realName" jdbcType="VARCHAR" />
+		<!-- <result column="secondDomain" property="secondDomain" jdbcType="VARCHAR" /> -->
+		<result column="locked" property="locked" jdbcType="CHAR" />
+	</resultMap>
+
+
+	<select id="findByUserName" parameterType="string" resultMap="BaseResultMap">
+		SELECT
+			sysUserId,
+			username,
+			password,
+			locked,
+			mobile,
+			realName
+		FROM
+			sys_user
+		WHERE username=#{userName}
+	</select>
+	
+	<select id="findRoleByUserName" parameterType="string" resultType="com.linkGap.projectManage.model.entity.SysRole">
+		SELECT
+			c.*
+		FROM
+			sys_user a left join sys_role_user b on a.sysUserId = b.sysUserId
+			left join sys_role c on b.sysRoleId = c.sysRoleId 
+		WHERE
+			a.username=#{userName}
+	</select>
+	
+	<insert id="insert" parameterType="com.linkGap.projectManage.model.entity.SysUser" useGeneratedKeys="true" keyProperty="sysUserId">
+	    insert into sys_user (sysUserId, username, mobile, realName, password, locked, isAllowMultiAccess, createTime, createUserId, updateTime, updateUserId) 
+	    values (#{sysUserId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR},#{mobile,jdbcType=VARCHAR}, #{realName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+	    #{locked,jdbcType=CHAR}, #{isAllowMultiAccess,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP},
+	     #{updateUserId,jdbcType=INTEGER})
+    </insert>
+    
+    <insert id="insertBatch"  parameterType="java.util.List" >
+	    insert into sys_user (sysUserId, username, password, locked) values
+	    <foreach collection="list" item="item" index="index" separator="," > 
+	    	 (#{item.sysUserId,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR},  #{item.locked,jdbcType=CHAR})
+	    </foreach>
+    </insert>
+  
+  	<select id="selectLastId" resultType="int">  
+        select LAST_INSERT_ID()   
+  	</select>
+
+	<select id="getIdsByUserName" parameterType="java.util.List" resultMap="BaseResultMap">
+		SELECT
+			sysUserId, username
+		FROM
+			sys_user
+		where locked = '1' and username in
+		<foreach item="item" index="index" collection="list"
+     		 open="(" separator="," close=")">
+        	#{item}
+  		</foreach>
+  		  order by field(  
+      	username,  
+       <foreach item="item" index="index" collection="list"
+     		 separator=","   >  
+        #{item}    
+       </foreach>   
+       )	  
+	</select>
+	
+	<select id="findByUserNameAndSecondDomain" parameterType="map" resultMap="BaseResultMap">
+		SELECT
+			sysUserId,
+			username,
+			password,
+			locked
+		FROM
+			sys_user 
+		<where>
+		locked = '1'
+			<if test="userName != null" >
+	        	and username=#{userName}
+	      	</if>
+	      	<!-- <if test="secondDomain != null" >
+	        	and secondDomain=#{secondDomain}
+	      	</if> -->
+		</where>
+	</select>
+	
+	<select id="findRoleByUserId" parameterType="int" resultType="com.linkGap.projectManage.model.entity.SysRole">
+		SELECT
+			c.*
+		FROM
+			sys_user a left join sys_role_user b on a.sysUserId = b.sysUserId
+			left join sys_role c on b.sysRoleId = c.sysRoleId
+		WHERE
+			a.sysUserId=#{userId}
+	</select>
+	
+	<select id="selectUsersByParams" parameterType="map" resultType="com.linkGap.projectManage.model.view.MailListView">
+		SELECT
+			s.sysUserId as sysUserId , s.username as userName, o.description as sysRoleName
+		FROM
+			sys_user s right join user_relation r on s.sysUserId = r.sysUserId
+			left join sys_role_user u on u.sysUserId = s.sysUserId left join sys_role o on o.sysRoleId = u.sysRoleId
+		WHERE   s.locked = '1'
+		<if test="customerId != null" >
+	   		and u.customerId =#{customerId}
+	    </if>
+	    <if test="sysRoleId != null" >
+	   		and u.sysRoleId =#{sysRoleId}
+	    </if>
+	    <if test="searchContent != null" >
+	   		and (s.username like CONCAT(CONCAT('%', #{searchContent}),'%') or s.mobile like CONCAT(CONCAT('%', #{searchContent}),'%'))
+	    </if>
+	</select>
+    <update id="updatePasswordByUserId" parameterType="map" >
+	   update sys_user
+	   set password = #{password,jdbcType=VARCHAR}
+	   where sysUserId = #{sysUserId,jdbcType=INTEGER}
+  	</update>
+  
+	 <update id="deleteByUserName"  parameterType="map" >
+	   update sys_user
+	   set locked = '2'
+	   where 1=1
+	   <if test="userName != null" >
+	   and username=#{userName}
+	   </if>
+	    <if test="sysUserId != null" >
+	   and sysUserId = #{sysUserId,jdbcType=INTEGER}
+	   </if>
+	 </update>
+  
+  <!-- 根据用户名修改密码-->
+  <update id="updatePasswdByUserName"  parameterType="com.linkGap.projectManage.model.entity.SysUser">
+    update sys_user  set `password`=#{password} where username=#{username} and locked='1'
+  </update>
+  
+  <!-- 根据用户id修改手机号码-->
+  <update id="updateMobileBySysUserId"  parameterType="com.linkGap.projectManage.model.entity.SysUser">
+    update sys_user set mobile = #{mobile,jdbcType=VARCHAR} where sysUserId=#{sysUserId} and locked='1'
+  </update>
+  
+  <!-- 修改密码成功后返回用户的相关信息-->
+  <select id="getUserInfoByUserName" parameterType="java.lang.String" resultType="com.linkGap.projectManage.model.view.ChangePasswdView">
+    select p.sysUserId as userid,p.username as username,p.locked as userStatus,
+   r.`name` as rolename, r.`status` as roleStatus,e.customerId as customerId,e.customerShopId as customerShopId,r.sysRoleId as roleId
+   from sys_user as p LEFT JOIN sys_role_user as ru on ru.sysUserId=p.sysUserId
+   LEFT JOIN sys_role as r on ru.sysRoleId=r.sysRoleId
+   LEFT JOIN user_relation as e on p.sysUserId=e.sysUserId
+   where p.username=#{userName} and p.locked='1'
+  </select>
+  
+  <!-- 根据角色获取权限集合-->
+  <select id="getPermissionByRoleId" parameterType="java.lang.Integer" resultType="com.linkGap.projectManage.model.entity.SysPermission">
+   SELECT y.permissionId as permissionId,y.`name` as name,y.description as description,y.url as url,
+  y.pid as pid,y.hasChildren as hasChildren from  sys_permission  as y  
+ LEFT JOIN sys_permission_role as o on y.permissionId=o.permissionId
+ where o.sysRoleId=#{roleId}
+  </select>
+  
+  <select id="getUserRoleInfo" parameterType="java.lang.Integer" resultType="com.linkGap.projectManage.model.view.UserView">
+     select q.sysRoleId as roleId,f.customerId as customerId,f.customerShopId as customerShopId from sys_user as p LEFT JOIN sys_role_user as h on p.sysUserId=h.sysUserId
+     LEFT JOIN sys_role as q on h.sysRoleId=q.sysRoleId
+     LEFT JOIN user_relation as f on p.sysUserId=f.sysUserId
+   where p.locked='1' and  p.sysUserId=#{userId}
+  </select>
+  
+  <select id="getKindsUserRoleList" parameterType="com.linkGap.projectManage.model.view.UserParamView" resultType="com.linkGap.projectManage.model.view.UserInfoView">
+   select s.sysUserId as sysUserId,s.username as userName,s.realName as realName from user_relation as u 
+  LEFT JOIN sys_user as s on u.sysUserId=s.sysUserId
+  LEFT JOIN sys_role_user as e on s.sysUserId=e.sysUserId
+  LEFT JOIN sys_role as o on e.sysRoleId=o.sysRoleId
+  where   o.sysRoleId=#{roleType} and s.locked='1'
+   <if test="roleId==1">
+     and u.customerId=#{id}
+   </if>
+   <if test="roleId==2">
+     and u.customerShopId=#{id}
+   </if>
+  </select>
+  
+  <select id="getLinkManInfo" parameterType="java.lang.Integer" resultType="com.linkGap.projectManage.model.view.LinkManInfoView">
+    SELECT
+		su.username as username,
+		su.mobile as mobile,
+		sr.`name` as sysRoleName,
+		sr.sysRoleId as sysRoleId,
+		cs.shopName as shopName,
+		su.locked as locked
+	FROM
+		sys_user su
+	LEFT JOIN sys_role_user sru ON su.sysUserId = sru.sysUserId
+	LEFT JOIN sys_role sr ON sru.sysRoleId = sr.sysRoleId
+	LEFT JOIN user_relation ur on su.sysUserId =ur.sysUserId
+	LEFT JOIN customer_shops cs on ur.customerShopId = cs.customerShopId
+	where su.sysUserId = #{sysUserId}
+  </select>
+  
+  
+</mapper>

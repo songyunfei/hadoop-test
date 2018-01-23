@@ -1,0 +1,299 @@
+2018-01-17 10:31:57,009  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 26424 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 10:31:57,010 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 10:31:57,010  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 10:32:06,905  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 9.977 seconds (JVM running for 59281.849)
+2018-01-17 10:35:56,791  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 26424 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 10:35:56,792 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 10:35:56,792  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 10:36:06,973  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.261 seconds (JVM running for 59521.917)
+2018-01-17 10:37:52,249  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 10700 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 10:37:52,249 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 10:37:52,249  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 10:38:22,790  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 26424 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 10:38:22,790 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 10:38:22,790  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 10:38:32,725  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.033 seconds (JVM running for 59667.67)
+2018-01-17 10:39:09,304  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 29376 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 10:39:09,304 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 10:39:09,304  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 10:39:24,360  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 15.444 seconds (JVM running for 15.983)
+2018-01-17 10:39:58,691  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 10:39:58,692  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 10:39:58,692  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 10:39:58,692  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 10:39:58,693  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 10:39:59,274 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId limit ?,? 
+2018-01-17 10:39:59,645 DEBUG queryList:159 ---- ==> Parameters: 1(Integer), 2(Integer)
+2018-01-17 10:39:59,698 DEBUG queryList:159 ---- <==      Total: 2
+2018-01-17 10:39:59,703 DEBUG getTotalByParams:159 ---- ==>  Preparing: SELECT DISTINCT pi.projectType as type, IFNULL( tb.count, 0) count FROM project_info pi LEFT JOIN( select p.projectType ,count(projectInfoId) as count from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId group by p.projectType) as tb on pi.projectType =tb.projectType 
+2018-01-17 10:39:59,708 DEBUG getTotalByParams:159 ---- ==> Parameters: 
+2018-01-17 10:39:59,720 DEBUG getTotalByParams:159 ---- <==      Total: 3
+2018-01-17 10:39:59,722  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=00, resultMsg=成功, resultValue=[com.linkGap.projectManage.model.view.ProjectListView@15e35f75, com.linkGap.projectManage.model.view.ProjectListView@342318d0]]
+2018-01-17 10:39:59,723  INFO WebLogAspect:74 ---- SPEND TIME : 1032
+2018-01-17 10:54:06,087  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/add
+2018-01-17 10:54:06,088  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 10:54:06,088  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 10:54:06,088  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 10:54:06,089  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@7825917c, null, [Lorg.springframework.web.multipart.MultipartFile;@6e89554b, [Lorg.springframework.web.multipart.MultipartFile;@5b452dad, [Lorg.springframework.web.multipart.MultipartFile;@10885f27, [Lorg.springframework.web.multipart.MultipartFile;@4472923b, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@6075a4f3]
+2018-01-17 10:54:21,851  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 10:54:21,852  INFO WebLogAspect:74 ---- SPEND TIME : 15765
+2018-01-17 10:55:09,292  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 29376 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 10:55:09,292 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 10:55:09,292  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 10:55:20,973  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 11.798 seconds (JVM running for 972.596)
+2018-01-17 10:57:07,410  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/add
+2018-01-17 10:57:07,411  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 10:57:07,411  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 10:57:07,411  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 10:57:07,411  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@56498b9b, %5B%7B%22name%22%3A%22test%E8%81%94%E7%B3%BB%22%2C%22telphone%22%3A%2213123232323%22%2C%22typeOfWork%22%3A%221%22%7D%5D, [Lorg.springframework.web.multipart.MultipartFile;@592d02f2, [Lorg.springframework.web.multipart.MultipartFile;@13f55e3e, [Lorg.springframework.web.multipart.MultipartFile;@254b6646, [Lorg.springframework.web.multipart.MultipartFile;@3f442427, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@e4f8baf]
+2018-01-17 10:57:24,727  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 10:57:24,727  INFO WebLogAspect:74 ---- SPEND TIME : 17317
+2018-01-17 10:58:40,680  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/add
+2018-01-17 10:58:40,680  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 10:58:40,681  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 10:58:40,681  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 10:58:40,681  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@5b25e587, %5B%7B%22name%22%3A%22test%E8%81%94%E7%B3%BB%22%2C%22telphone%22%3A%2213123232323%22%2C%22typeOfWork%22%3A%221%22%7D%5D, [Lorg.springframework.web.multipart.MultipartFile;@378c900f, [Lorg.springframework.web.multipart.MultipartFile;@6a34fc4d, [Lorg.springframework.web.multipart.MultipartFile;@4f77d77c, [Lorg.springframework.web.multipart.MultipartFile;@3b0a1ac8, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@6855e94e]
+2018-01-17 10:59:30,978  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 10:59:30,979  INFO WebLogAspect:74 ---- SPEND TIME : 50299
+2018-01-17 11:00:10,596  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/add
+2018-01-17 11:00:10,596  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 11:00:10,596  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 11:00:10,597  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 11:00:10,597  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@6dafd3b6, %5B%7B%22name%22%3A%22test%E8%81%94%E7%B3%BB%22%2C%22telphone%22%3A%2213123232323%22%2C%22typeOfWork%22%3A%221%22%7D%5D, [Lorg.springframework.web.multipart.MultipartFile;@28ad4067, [Lorg.springframework.web.multipart.MultipartFile;@72e64c3c, [Lorg.springframework.web.multipart.MultipartFile;@194f2a96, [Lorg.springframework.web.multipart.MultipartFile;@aee786a, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@4882bf28]
+2018-01-17 11:01:37,075  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 11:01:37,076  INFO WebLogAspect:74 ---- SPEND TIME : 86480
+2018-01-17 11:02:29,627  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 29376 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 11:02:29,628 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 11:02:29,628  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 11:02:39,704  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.206 seconds (JVM running for 1411.327)
+2018-01-17 11:03:06,617  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/add
+2018-01-17 11:03:06,617  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 11:03:06,617  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 11:03:06,617  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 11:03:06,618  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@7d735bba, %5B%7B%22name%22%3A%22test%E8%81%94%E7%B3%BB%22%2C%22telphone%22%3A%2213123232323%22%2C%22typeOfWork%22%3A%221%22%7D%5D, [Lorg.springframework.web.multipart.MultipartFile;@7f9abd16, [Lorg.springframework.web.multipart.MultipartFile;@32dfdd48, [Lorg.springframework.web.multipart.MultipartFile;@3d5dd2b0, [Lorg.springframework.web.multipart.MultipartFile;@5a94e02a, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@704c8463]
+2018-01-17 11:03:25,379  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 11:03:25,379  INFO WebLogAspect:74 ---- SPEND TIME : 18763
+2018-01-17 11:04:18,943  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 24836 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 11:04:18,943 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 11:04:18,943  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 11:04:33,899  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 15.361 seconds (JVM running for 15.894)
+2018-01-17 11:07:11,249  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/add
+2018-01-17 11:07:11,250  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 11:07:11,250  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 11:07:11,251  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 11:07:11,251  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@16540a12, %5B%7B%22name%22%3A%22test%E8%81%94%E7%B3%BB%22%2C%22telphone%22%3A%2213123232323%22%2C%22typeOfWork%22%3A%221%22%7D%5D, [Lorg.springframework.web.multipart.MultipartFile;@12441f77, [Lorg.springframework.web.multipart.MultipartFile;@578b1b1b, [Lorg.springframework.web.multipart.MultipartFile;@67e2fb8f, [Lorg.springframework.web.multipart.MultipartFile;@51d069fb, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@63dd7b11]
+2018-01-17 11:07:19,420  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 11:07:19,421  INFO WebLogAspect:74 ---- SPEND TIME : 8172
+2018-01-17 11:09:15,961  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 24836 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 11:09:15,961 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 11:09:15,961  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 11:09:25,832  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.008 seconds (JVM running for 307.829)
+2018-01-17 11:11:51,410  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/add
+2018-01-17 11:11:51,411  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 11:11:51,411  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 11:11:51,412  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 11:11:51,413  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@53ce9c4b, %5B%7B%22name%22%3A%22test%E8%81%94%E7%B3%BB%22%2C%22telphone%22%3A%2213123232323%22%2C%22typeOfWork%22%3A%221%22%7D%5D, [Lorg.springframework.web.multipart.MultipartFile;@342d8f8c, [Lorg.springframework.web.multipart.MultipartFile;@2368c515, [Lorg.springframework.web.multipart.MultipartFile;@7f64980d, [Lorg.springframework.web.multipart.MultipartFile;@586f7f6e, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@e6ca00]
+2018-01-17 11:11:51,947 DEBUG insert:159 ---- ==>  Preparing: insert into project_info (projectInfoId, projectType, customerShopId, buildingName, addressDetail, customerName, customerMobile, customerOpenId, contractNumber, contractShortImageUrls, contractImageUrls, constructionShortImageUrls, constructionImageUrls, saleMan, designMan, constructLeader, supervisor, currentProgress, score, createTime, createUserId, updateTime, updateUserId, deleted, status, projectStatus) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+2018-01-17 11:11:52,048 DEBUG insert:159 ---- ==> Parameters: null, 1(String), 1(Integer), %25E9%2580%259A%25E5%258D%258F%25E5%25B0%258F%25E5%258C%25BA(String), %25E9%2595%25BF%25E5%25AE%2581%25E8%25B7%25AF(String), test_customer(String), 13123232323(String), null, null, (String), (String), F:\testimage\15161587114258771bride.jpg,(String), F:\testimage\15161587114237134gallery-5.jpg,(String), 1(Integer), 1(Integer), 1(Integer), 1(Integer), 0(String), null, 2018-01-17 11:11:51.427(Timestamp), 1(Integer), 2018-01-17 11:11:51.427(Timestamp), 1(Integer), 0(Byte), null, 2(Byte)
+2018-01-17 11:11:52,065 DEBUG insert:159 ---- <==    Updates: 1
+2018-01-17 11:11:52,080 DEBUG insert:159 ---- ==>  Preparing: insert into project_pic (projectPicId, projectInfoId, type, smallImageUrls, imgUrls, imgOrder, createTime, createUserId, status ) values (?, ?, ?, ?, ?, ?, ?, ?, ? ) 
+2018-01-17 11:11:52,083 DEBUG insert:159 ---- ==> Parameters: null, 50(Integer), 1(String), F:\testimage\15161587114258771bride.jpg(String), F:\testimage\15161587114237134gallery-5.jpg(String), 0(Integer), 2018-01-17 11:11:52.078(Timestamp), 1(Integer), 1(String)
+2018-01-17 11:11:52,099 DEBUG insert:159 ---- <==    Updates: 1
+2018-01-17 11:11:52,102 DEBUG insert:159 ---- ==>  Preparing: insert into project_contacts (customerContactId, projectInfoId, name, telphone, typeOfWork, status, createTime, createUserId, updateTime, updateUserId) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+2018-01-17 11:11:52,104 DEBUG insert:159 ---- ==> Parameters: null, 50(Integer), test联系(String), 13123232323(String), 1(String), 1(String), 2018-01-17 11:11:52.101(Timestamp), 1(Integer), 2018-01-17 11:11:52.101(Timestamp), 1(Integer)
+2018-01-17 11:11:52,118 DEBUG insert:159 ---- <==    Updates: 1
+2018-01-17 11:11:52,120  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=00, resultMsg=成功, resultValue=null]
+2018-01-17 11:11:52,120  INFO WebLogAspect:74 ---- SPEND TIME : 710
+2018-01-17 13:37:48,842  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 24836 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 13:37:48,842 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 13:37:48,843  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 13:37:59,289  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.555 seconds (JVM running for 9221.285)
+2018-01-17 14:18:02,414  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 24836 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 14:18:02,414 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 14:18:02,414  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 14:18:11,988  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 9.66 seconds (JVM running for 11633.983)
+2018-01-17 14:18:51,324  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 24836 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 14:18:51,324 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 14:18:51,324  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 14:19:01,375  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.134 seconds (JVM running for 11683.371)
+2018-01-17 14:19:12,625  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 24836 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 14:19:12,625 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 14:19:12,625  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 14:19:22,398  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 9.852 seconds (JVM running for 11704.394)
+2018-01-17 14:20:50,326  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 24836 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 14:20:50,326 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 14:20:50,326  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 14:21:00,288  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.053 seconds (JVM running for 11802.283)
+2018-01-17 14:32:04,302  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 39388 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 14:32:04,303 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 14:32:04,303  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 14:32:18,237  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 14.312 seconds (JVM running for 14.888)
+2018-01-17 14:32:32,433  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 14:32:32,433  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 14:32:32,434  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 14:32:32,434  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 14:32:32,434  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 14:32:33,046 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId limit ?,? 
+2018-01-17 14:32:33,409 DEBUG queryList:159 ---- ==> Parameters: 1(Integer), 10(Integer)
+2018-01-17 14:32:33,450 DEBUG queryList:159 ---- <==      Total: 10
+2018-01-17 14:32:33,456 DEBUG getTotalByParams:159 ---- ==>  Preparing: SELECT DISTINCT pi.projectType as type, IFNULL( tb.count, 0) count FROM project_info pi LEFT JOIN( select p.projectType ,count(projectInfoId) as count from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId group by p.projectType) as tb on pi.projectType =tb.projectType 
+2018-01-17 14:32:33,461 DEBUG getTotalByParams:159 ---- ==> Parameters: 
+2018-01-17 14:32:33,471 DEBUG getTotalByParams:159 ---- <==      Total: 3
+2018-01-17 14:32:33,474  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=00, resultMsg=成功, resultValue=[com.linkGap.projectManage.model.view.ProjectListView@31e27fbb, com.linkGap.projectManage.model.view.ProjectListView@36b5c1b9, com.linkGap.projectManage.model.view.ProjectListView@20649b9a, com.linkGap.projectManage.model.view.ProjectListView@6173f05, com.linkGap.projectManage.model.view.ProjectListView@24aa87db, com.linkGap.projectManage.model.view.ProjectListView@3c8a22fe, com.linkGap.projectManage.model.view.ProjectListView@38b6d6be, com.linkGap.projectManage.model.view.ProjectListView@7e639ba, com.linkGap.projectManage.model.view.ProjectListView@7782f2c2, com.linkGap.projectManage.model.view.ProjectListView@1a72a31e]]
+2018-01-17 14:32:33,474  INFO WebLogAspect:74 ---- SPEND TIME : 1041
+2018-01-17 14:56:56,732  INFO WebLogAspect:62 ---- URL : http://192.168.10.26:8888/project/add
+2018-01-17 14:56:56,732  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 14:56:56,732  INFO WebLogAspect:64 ---- IP : 192.168.10.118
+2018-01-17 14:56:56,733  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 14:56:56,733  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@1fee721b, null, [Lorg.springframework.web.multipart.MultipartFile;@3a804053, [Lorg.springframework.web.multipart.MultipartFile;@7e00fd8f, [Lorg.springframework.web.multipart.MultipartFile;@f79dede, [Lorg.springframework.web.multipart.MultipartFile;@636b0b80, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@5b515d66]
+2018-01-17 14:56:56,736  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 14:56:56,737  INFO WebLogAspect:74 ---- SPEND TIME : 6
+2018-01-17 14:57:32,767  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 39388 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 14:57:32,767 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 14:57:32,767  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 14:57:44,090  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 11.47 seconds (JVM running for 1540.742)
+2018-01-17 14:57:54,466  INFO WebLogAspect:62 ---- URL : http://192.168.10.26:8888/project/add
+2018-01-17 14:57:54,466  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 14:57:54,466  INFO WebLogAspect:64 ---- IP : 192.168.10.118
+2018-01-17 14:57:54,466  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 14:57:54,467  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@50ffd53b, null, [Lorg.springframework.web.multipart.MultipartFile;@677508d5, [Lorg.springframework.web.multipart.MultipartFile;@369b9244, [Lorg.springframework.web.multipart.MultipartFile;@78e34b34, [Lorg.springframework.web.multipart.MultipartFile;@561b0f1e, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@19e796a8]
+2018-01-17 14:57:54,480  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 14:57:54,481  INFO WebLogAspect:74 ---- SPEND TIME : 16
+2018-01-17 14:58:27,487  INFO WebLogAspect:62 ---- URL : http://192.168.10.26:8888/project/add
+2018-01-17 14:58:27,488  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 14:58:27,489  INFO WebLogAspect:64 ---- IP : 192.168.10.118
+2018-01-17 14:58:27,489  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 14:58:27,490  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@1bd3f2fc, null, [Lorg.springframework.web.multipart.MultipartFile;@1fec655e, [Lorg.springframework.web.multipart.MultipartFile;@5aeef8c7, [Lorg.springframework.web.multipart.MultipartFile;@6f3ef8ca, [Lorg.springframework.web.multipart.MultipartFile;@6b7ea3c3, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@1744fd67]
+2018-01-17 14:58:27,495  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=保存失败，请稍后再试!, resultValue=null]
+2018-01-17 14:58:27,496  INFO WebLogAspect:74 ---- SPEND TIME : 9
+2018-01-17 14:59:52,677  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 39388 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 14:59:52,677 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 14:59:52,677  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 15:00:02,541  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 9.989 seconds (JVM running for 1679.192)
+2018-01-17 15:00:23,260  INFO WebLogAspect:62 ---- URL : http://192.168.10.26:8888/project/add
+2018-01-17 15:00:23,260  INFO WebLogAspect:63 ---- HTTP_METHOD : POST
+2018-01-17 15:00:23,260  INFO WebLogAspect:64 ---- IP : 192.168.10.118
+2018-01-17 15:00:23,261  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.addProject
+2018-01-17 15:00:23,261  INFO WebLogAspect:66 ---- ARGS : [com.linkGap.projectManage.model.entity.ProjectInfo@23e0e10c, null, [Lorg.springframework.web.multipart.MultipartFile;@ef591e0, [Lorg.springframework.web.multipart.MultipartFile;@1516a53d, [Lorg.springframework.web.multipart.MultipartFile;@293c6546, [Lorg.springframework.web.multipart.MultipartFile;@df019ec, org.springframework.web.multipart.support.StandardMultipartHttpServletRequest@2fa8e323]
+2018-01-17 15:00:48,060 DEBUG insert:159 ---- ==>  Preparing: insert into project_info (projectInfoId, projectType, customerShopId, buildingName, addressDetail, customerName, customerMobile, customerOpenId, contractNumber, contractShortImageUrls, contractImageUrls, constructionShortImageUrls, constructionImageUrls, saleMan, designMan, constructLeader, supervisor, currentProgress, score, createTime, createUserId, updateTime, updateUserId, deleted, status, projectStatus) values (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?) 
+2018-01-17 15:00:48,084 DEBUG insert:159 ---- ==> Parameters: null, null, null, null, null, null, null, null, null, (String), (String), (String), F:\testimage\1516172443753_1411_1516172442410518.jpeg,(String), null, null, null, null, 0(String), null, 2018-01-17 15:00:47.758(Timestamp), null, 2018-01-17 15:00:47.758(Timestamp), null, 0(Byte), null, 1(Byte)
+2018-01-17 15:00:48,101 DEBUG insert:159 ---- <==    Updates: 1
+2018-01-17 15:00:48,109  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=00, resultMsg=成功, resultValue=null]
+2018-01-17 15:00:48,109  INFO WebLogAspect:74 ---- SPEND TIME : 24850
+2018-01-17 15:13:29,819  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 39388 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 15:13:29,819 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 15:13:29,820  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 16:42:38,777  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 18800 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 16:42:38,777 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 16:42:38,777  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 16:42:52,561  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 14.133 seconds (JVM running for 14.699)
+2018-01-17 16:43:05,307  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 16:43:05,307  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 16:43:05,308  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 16:43:05,308  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 16:43:05,308  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 16:43:05,948 DEBUG queryList_COUNT:159 ---- ==>  Preparing: select count(0) from (select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId) tmp_count 
+2018-01-17 16:43:06,291 DEBUG queryList_COUNT:159 ---- ==> Parameters: 
+2018-01-17 16:43:06,322 DEBUG queryList_COUNT:159 ---- <==      Total: 1
+2018-01-17 16:43:06,326 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId LIMIT ? 
+2018-01-17 16:43:06,330 DEBUG queryList:159 ---- ==> Parameters: 10(Integer)
+2018-01-17 16:43:06,355 DEBUG queryList:159 ---- <==      Total: 10
+2018-01-17 16:43:06,361 DEBUG getTotalByParams:159 ---- ==>  Preparing: select p.projectType as type ,count( p.projectInfoId) as count from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId group by p.projectType 
+2018-01-17 16:43:06,366 DEBUG getTotalByParams:159 ---- ==> Parameters: 
+2018-01-17 16:43:06,379 DEBUG getTotalByParams:159 ---- <==      Total: 4
+2018-01-17 16:43:06,385  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=后台异常, resultValue=null]
+2018-01-17 16:43:06,385  INFO WebLogAspect:74 ---- SPEND TIME : 1078
+2018-01-17 16:43:31,823  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 16:43:31,823  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 16:43:31,824  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 16:43:31,824  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 16:43:31,824  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 16:43:31,833 DEBUG queryList_COUNT:159 ---- ==>  Preparing: select count(0) from (select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId) tmp_count 
+2018-01-17 16:43:31,835 DEBUG queryList_COUNT:159 ---- ==> Parameters: 
+2018-01-17 16:43:31,846 DEBUG queryList_COUNT:159 ---- <==      Total: 1
+2018-01-17 16:43:31,848 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId LIMIT ? 
+2018-01-17 16:43:31,850 DEBUG queryList:159 ---- ==> Parameters: 10(Integer)
+2018-01-17 16:43:31,871 DEBUG queryList:159 ---- <==      Total: 10
+2018-01-17 16:43:36,042 DEBUG getTotalByParams:159 ---- ==>  Preparing: select p.projectType as type ,count( p.projectInfoId) as count from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId group by p.projectType 
+2018-01-17 16:43:36,047 DEBUG getTotalByParams:159 ---- ==> Parameters: 
+2018-01-17 16:43:36,065 DEBUG getTotalByParams:159 ---- <==      Total: 4
+2018-01-17 16:44:33,043  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=后台异常, resultValue=null]
+2018-01-17 16:44:33,044  INFO WebLogAspect:74 ---- SPEND TIME : 61221
+2018-01-17 16:46:58,217  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 16:46:58,218  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 16:46:58,218  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 16:46:58,218  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 16:46:58,218  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 16:46:58,235 DEBUG queryList_COUNT:159 ---- ==>  Preparing: select count(0) from (select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId) tmp_count 
+2018-01-17 16:46:58,236 DEBUG queryList_COUNT:159 ---- ==> Parameters: 
+2018-01-17 16:46:58,247 DEBUG queryList_COUNT:159 ---- <==      Total: 1
+2018-01-17 16:46:58,249 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId LIMIT ? 
+2018-01-17 16:46:58,251 DEBUG queryList:159 ---- ==> Parameters: 10(Integer)
+2018-01-17 16:46:58,267 DEBUG queryList:159 ---- <==      Total: 10
+2018-01-17 16:47:04,075 DEBUG getTotalByParams:159 ---- ==>  Preparing: select p.projectType as type ,count( p.projectInfoId) as count from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId group by p.projectType 
+2018-01-17 16:47:04,079 DEBUG getTotalByParams:159 ---- ==> Parameters: 
+2018-01-17 16:47:04,095 DEBUG getTotalByParams:159 ---- <==      Total: 3
+2018-01-17 16:47:44,946  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=00, resultMsg=成功, resultValue=Page{count=true, pageNum=1, pageSize=10, startRow=0, endRow=10, total=205, pages=21, reasonable=false, pageSizeZero=false}]
+2018-01-17 16:47:44,946  INFO WebLogAspect:74 ---- SPEND TIME : 46729
+2018-01-17 17:15:52,408  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 18800 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 17:15:52,408 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 17:15:52,408  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 17:16:03,491  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 11.218 seconds (JVM running for 2005.629)
+2018-01-17 17:16:05,654  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 17:16:05,654  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 17:16:05,654  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 17:16:05,654  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 17:16:05,654  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 17:16:05,931 DEBUG queryList_COUNT:159 ---- ==>  Preparing: select count(0) from (select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId) tmp_count 
+2018-01-17 17:16:05,933 DEBUG queryList_COUNT:159 ---- ==> Parameters: 
+2018-01-17 17:16:05,942 DEBUG queryList_COUNT:159 ---- <==      Total: 1
+2018-01-17 17:16:05,943 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,p.score,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId LIMIT ? 
+2018-01-17 17:16:05,945 DEBUG queryList:159 ---- ==> Parameters: 10(Integer)
+2018-01-17 17:16:05,961 DEBUG queryList:159 ---- <==      Total: 10
+2018-01-17 17:16:05,965 DEBUG getTotalByParams:159 ---- ==>  Preparing: SELECT DISTINCT pi.projectType as type, IFNULL( tb.count, 0) count FROM project_info pi LEFT JOIN( select p.projectType as type ,count( p.projectInfoId) as count from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId group by p.projectType) as tb on pi.projectType =tb.projectType 
+2018-01-17 17:16:05,967 DEBUG getTotalByParams:159 ---- ==> Parameters: 
+2018-01-17 17:16:06,046  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=后台异常, resultValue=null]
+2018-01-17 17:16:06,046  INFO WebLogAspect:74 ---- SPEND TIME : 393
+2018-01-17 17:16:40,078  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 18800 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 17:16:40,079 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 17:16:40,079  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 17:16:50,698  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.714 seconds (JVM running for 2052.835)
+2018-01-17 17:17:03,341  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 17:17:03,341  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 17:17:03,341  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 17:17:03,341  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 17:17:03,342  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 17:17:03,644 DEBUG queryList_COUNT:159 ---- ==>  Preparing: select count(0) from (select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId limit ?,?) tmp_count 
+2018-01-17 17:17:03,647 DEBUG queryList_COUNT:159 ---- ==> Parameters: 1(Integer), 10(Integer)
+2018-01-17 17:17:03,656 DEBUG queryList_COUNT:159 ---- <==      Total: 1
+2018-01-17 17:17:03,658 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId limit ?,? LIMIT ? 
+2018-01-17 17:17:03,670  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=01, resultMsg=后台异常, resultValue=null]
+2018-01-17 17:17:03,671  INFO WebLogAspect:74 ---- SPEND TIME : 331
+2018-01-17 17:17:24,682  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 18800 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 17:17:24,682 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 17:17:24,682  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 17:17:35,414  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 10.833 seconds (JVM running for 2097.552)
+2018-01-17 17:18:02,531  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 30584 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 17:18:02,532 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 17:18:02,532  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 17:18:16,946  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 14.781 seconds (JVM running for 15.339)
+2018-01-17 17:18:24,990  INFO WebLogAspect:62 ---- URL : http://127.0.0.1:8888/project/list
+2018-01-17 17:18:24,990  INFO WebLogAspect:63 ---- HTTP_METHOD : GET
+2018-01-17 17:18:24,991  INFO WebLogAspect:64 ---- IP : 127.0.0.1
+2018-01-17 17:18:24,991  INFO WebLogAspect:65 ---- CLASS_METHOD : com.linkGap.projectManage.controller.ProjectController.projectList
+2018-01-17 17:18:24,991  INFO WebLogAspect:66 ---- ARGS : [ProjectRequestParams [userId=null, listType=null, searchContent=null, projectType=null, customerShopId=null, constructLeader=null, progressOrder=null]]
+2018-01-17 17:18:25,558 DEBUG queryList:159 ---- ==>  Preparing: select p.projectInfoId,p.buildingName,p.createTime,p.currentProgress, p.projectType,p.customerName,cs.shopName as customerShopName, su1.username as constructLeader,su2.username as supervisor, su3.username as saleMan, IF(p.projectStatus=1,'灰',IF(p.projectStatus=3,'绿',IF(p.status=1,'黄',IF(p.status=2,'红',IF(p.status=3,'蓝','无色'))))) AS colorShow from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId limit ?,? 
+2018-01-17 17:18:25,883 DEBUG queryList:159 ---- ==> Parameters: 1(Integer), 10(Integer)
+2018-01-17 17:18:25,919 DEBUG queryList:159 ---- <==      Total: 10
+2018-01-17 17:18:25,924 DEBUG getTotalByParams:159 ---- ==>  Preparing: SELECT DISTINCT pi.projectType as type, IFNULL( tb.count, 0) count FROM project_info pi LEFT JOIN( select p.projectType ,count(projectInfoId) as count from project_info p left join customer_shops cs on p.customerShopId=cs.customerShopId left join sys_user su1 on p.constructLeader=su1.sysUserId left join sys_user su2 on p.supervisor=su2.sysUserId left join sys_user su3 on p.saleMan=su3.sysUserId left join sys_user su4 on p.saleMan=su3.sysUserId group by p.projectType) as tb on pi.projectType =tb.projectType 
+2018-01-17 17:18:25,927 DEBUG getTotalByParams:159 ---- ==> Parameters: 
+2018-01-17 17:18:25,938 DEBUG getTotalByParams:159 ---- <==      Total: 3
+2018-01-17 17:18:25,940  INFO WebLogAspect:73 ---- RESPONSE : ReturnResultUtil [resultCode=00, resultMsg=成功, resultValue=[com.linkGap.projectManage.model.view.ProjectListView@6bf9ab05, com.linkGap.projectManage.model.view.ProjectListView@2cfab9ed, com.linkGap.projectManage.model.view.ProjectListView@13d8a58e, com.linkGap.projectManage.model.view.ProjectListView@64acfd9f, com.linkGap.projectManage.model.view.ProjectListView@42abd38c, com.linkGap.projectManage.model.view.ProjectListView@3b672fe5, com.linkGap.projectManage.model.view.ProjectListView@6d4509d2, com.linkGap.projectManage.model.view.ProjectListView@6e0651e0, com.linkGap.projectManage.model.view.ProjectListView@72adc81f, com.linkGap.projectManage.model.view.ProjectListView@70b7d9a8]]
+2018-01-17 17:18:25,940  INFO WebLogAspect:74 ---- SPEND TIME : 950
+2018-01-17 17:19:12,237  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 30584 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 17:19:12,238 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 17:19:12,238  INFO ProjectManageApplication:597 ---- The following profiles are active: test
+2018-01-17 17:19:23,906  INFO ProjectManageApplication:57 ---- Started ProjectManageApplication in 11.778 seconds (JVM running for 82.297)
+2018-01-17 17:42:37,016  INFO ProjectManageApplication:48 ---- Starting ProjectManageApplication on a-PC with PID 30584 (D:\workspace\projectManage\target\classes started by Administrator in D:\workspace\projectManage)
+2018-01-17 17:42:37,016 DEBUG ProjectManageApplication:51 ---- Running with Spring Boot v1.5.8.RELEASE, Spring v4.3.12.RELEASE
+2018-01-17 17:42:37,016  INFO ProjectManageApplication:597 ---- The following profiles are active: test

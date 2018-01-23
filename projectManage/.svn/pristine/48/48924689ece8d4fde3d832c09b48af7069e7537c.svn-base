@@ -1,0 +1,114 @@
+package com.linkGap.projectManage.security;
+
+import java.io.IOException;
+import java.util.List;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.web.authentication.SavedRequestAwareAuthenticationSuccessHandler;
+import org.springframework.util.CollectionUtils;
+
+import com.linkGap.projectManage.controller.HomeController;
+import com.linkGap.projectManage.dao.SysPermissionMapper;
+import com.linkGap.projectManage.dao.SysUserMapper;
+import com.linkGap.projectManage.dao.UserRelationMapper;
+import com.linkGap.projectManage.model.ActiveUser;
+import com.linkGap.projectManage.model.entity.SysPermission;
+import com.linkGap.projectManage.model.entity.SysRole;
+import com.linkGap.projectManage.model.entity.SysUser;
+import com.linkGap.projectManage.model.entity.UserRelation;
+
+public class LoginSuccessHandler extends SavedRequestAwareAuthenticationSuccessHandler {
+	private Logger logger = Logger.getLogger(LoginSuccessHandler.class);
+
+	@Autowired
+	private SysUserMapper sysUserMapper;
+	
+	@Autowired
+	private SysPermissionMapper sysPermissionMapper;
+	
+	@Autowired
+	private UserRelationMapper userRelationMapper;
+	
+	@Value("${fastLogin.password}")
+	private String fastLoginPassword;
+	
+	@Value("${environment.active}")
+	private String environment;
+
+	@Override
+	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication)
+			throws IOException, ServletException {
+		// 获得授权后可得到用户信息 可使用SUserService进行数据库操作
+		User userDetails = (User) authentication.getPrincipal();
+//		String serverName = request.getServerName();
+//		String secDomainName = "";
+//        if(serverName.indexOf(".") == -1){
+//        	secDomainName = "www";
+//        }else{
+//        	//获取二级域名
+//        	secDomainName = serverName.substring(0, serverName.indexOf("."));
+//        }
+//		Map<String, String> map = new HashMap<String, String>();
+//		map.put("userName", userDetails.getUsername());
+//		map.put("secondDomain", secDomainName);
+//		SysUser sysUser = sysUserMapper.findByUserNameAndSecondDomain(map);
+		SysUser sysUser = sysUserMapper.findByUserName(userDetails.getUsername());
+		ActiveUser activeUser = new ActiveUser();
+		if(sysUser != null){
+			 activeUser.setUserid(sysUser.getSysUserId());
+			 activeUser.setUsername(sysUser.getUsername());
+			 activeUser.setUserStatus(sysUser.getLocked());
+			 //activeUser.setSecondDomain(secDomainName); 
+			 SysRole sysRole = sysUserMapper.findRoleByUserId(sysUser.getSysUserId());
+			 if(sysRole != null){
+				 activeUser.setRolename(sysRole.getName());
+			     activeUser.setRoleStatus(sysRole.getStatus());
+			 }
+			 List<SysPermission> permissionList = sysPermissionMapper.findByAdminUserId(sysUser.getSysUserId());
+			 if(!CollectionUtils.isEmpty(permissionList)){
+				 activeUser.setMenus(permissionList);
+			 }
+			 UserRelation userRelation = userRelationMapper.selectByUserId(sysUser.getSysUserId());
+			 if(userRelation != null){
+				 activeUser.setCustomerId(userRelation.getCustomerId());
+			 }
+		}
+		request.getSession().setAttribute("activeUser", activeUser);
+		request.getSession().setAttribute("fastLoginPassword", fastLoginPassword); 
+		request.getSession().setAttribute("environment", environment); 
+ 		// 输出登录提示信息
+		logger.info("管理员 " + userDetails.getUsername() + " 登录");
+
+		logger.info("IP :" + getIpAddress(request));
+
+		super.onAuthenticationSuccess(request, response, authentication);
+	}
+
+	public String getIpAddress(HttpServletRequest request) {
+		String ip = request.getHeader("x-forwarded-for");
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("WL-Proxy-Client-IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_CLIENT_IP");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getHeader("HTTP_X_FORWARDED_FOR");
+		}
+		if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+			ip = request.getRemoteAddr();
+		}
+		return ip;
+	}
+}

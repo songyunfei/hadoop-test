@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+	<classPathEntry location="F:\workspace_linkgap\5UManage\src\main\webapp\WEB-INF\lib\mysql-connector-java-5.1.7-bin.jar" />
+	<context id="context1" defaultModelType="flat">
+		<commentGenerator>
+			<property name="suppressAllComments" value="true" /><!-- 是否取消注释 -->
+			<property name="suppressDate" value="false" /> <!-- 是否生成注释代时间戳 -->
+			<property name="javaFileEncoding" value="UTF-8" />
+		</commentGenerator>
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://139.196.197.111:3306/projectManage?characterEncoding=utf-8"
+			userId="root" password="Admin168" />
+
+		<javaTypeResolver type="com.linkGap.projectManage.JavaTypeResolverDefaultImpl">
+			<!-- 是否使用bigDecimal， false可自动转化以下类型（Long, Integer, Short, etc.） -->
+			<property name="forceBigDecimals" value="false" />
+		</javaTypeResolver>
+
+		<javaModelGenerator targetPackage="com.linkGap.projectManage.model.entity" targetProject="projectManage">
+			<property name="enableSubPackages" value="true" />
+			<property name="trimStrings" value="true" />
+			<property name="javaExampleTargetPackage" value="com.linkGap.projectManage.model.entity" />
+			<property name="javaExampleTargetProject" value="projectManage" />
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.linkGap.projectManage.dao" targetProject="projectManage">
+			<property name="enableSubPackages" value="true" />
+		</sqlMapGenerator>
+		<javaClientGenerator targetPackage="com.linkGap.projectManage.dao" targetProject="projectManage" type="XMLMAPPER">
+			<property name="enableSubPackages" value="true" />
+		</javaClientGenerator>
+
+		<table schema="" tableName="sys_role" enableCountByExample="false" enableUpdateByExample="false"
+			enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false">
+			<property name="useActualColumnNames" value="true"></property>
+		</table>
+
+	</context>
+</generatorConfiguration>

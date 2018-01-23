@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.linkGap.projectManage.dao.CustomerPicMapper">
+  <resultMap id="BaseResultMap" type="com.linkGap.projectManage.model.entity.CustomerPic">
+    <id column="customerPicId" jdbcType="INTEGER" property="customerPicId" />
+    <result column="customerId" jdbcType="INTEGER" property="customerId" />
+    <result column="smallImageUrls" jdbcType="VARCHAR" property="smallImageUrls" />
+    <result column="imgUrls" jdbcType="VARCHAR" property="imgUrls" />
+    <result column="imgOrder" jdbcType="INTEGER" property="imgOrder" />
+    <result column="createTime" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="createUserId" jdbcType="INTEGER" property="createUserId" />
+    <result column="status" jdbcType="CHAR" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    customerPicId, customerId, smallImageUrls, imgUrls, imgOrder, createTime, createUserId, 
+    status
+  </sql>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from customer_pic
+    where customerPicId = #{customerPicId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from customer_pic
+    where customerPicId = #{customerPicId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.linkGap.projectManage.model.entity.CustomerPic">
+    insert into customer_pic (customerPicId, customerId, smallImageUrls, 
+      imgUrls, imgOrder, createTime, 
+      createUserId, status)
+    values (#{customerPicId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{smallImageUrls,jdbcType=VARCHAR}, 
+      #{imgUrls,jdbcType=VARCHAR}, #{imgOrder,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{status,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linkGap.projectManage.model.entity.CustomerPic">
+    insert into customer_pic
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="customerPicId != null">
+        customerPicId,
+      </if>
+      <if test="customerId != null">
+        customerId,
+      </if>
+      <if test="smallImageUrls != null">
+        smallImageUrls,
+      </if>
+      <if test="imgUrls != null">
+        imgUrls,
+      </if>
+      <if test="imgOrder != null">
+        imgOrder,
+      </if>
+      <if test="createTime != null">
+        createTime,
+      </if>
+      <if test="createUserId != null">
+        createUserId,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="customerPicId != null">
+        #{customerPicId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null">
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="smallImageUrls != null">
+        #{smallImageUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrls != null">
+        #{imgUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="imgOrder != null">
+        #{imgOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linkGap.projectManage.model.entity.CustomerPic">
+    update customer_pic
+    <set>
+      <if test="customerId != null">
+        customerId = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="smallImageUrls != null">
+        smallImageUrls = #{smallImageUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrls != null">
+        imgUrls = #{imgUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="imgOrder != null">
+        imgOrder = #{imgOrder,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null">
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null">
+        createUserId = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where customerPicId = #{customerPicId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linkGap.projectManage.model.entity.CustomerPic">
+    update customer_pic
+    set customerId = #{customerId,jdbcType=INTEGER},
+      smallImageUrls = #{smallImageUrls,jdbcType=VARCHAR},
+      imgUrls = #{imgUrls,jdbcType=VARCHAR},
+      imgOrder = #{imgOrder,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR}
+    where customerPicId = #{customerPicId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="queryUrlByCustomerId" parameterType="java.lang.Integer" resultType="com.linkGap.projectManage.model.entity.CustomerPic">
+  	select 
+    	customerPicId,imgUrls,smallImageUrls
+    from customer_pic
+    where customerId = #{customerId,jdbcType=INTEGER}
+  
+  </select>
+  
+  <insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List" >
+    insert into customer_pic (customerPicId, customerId, smallImageUrls, imgUrls, imgOrder, createTime, createUserId, status) values
+    <foreach collection="list" item="item" index="index" separator="," >
+      (#{customerPicId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{smallImageUrls,jdbcType=VARCHAR}, 
+      #{imgUrls,jdbcType=VARCHAR}, #{imgOrder,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{status,jdbcType=CHAR})
+     </foreach>
+  </insert>
+</mapper>

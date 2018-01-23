@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linkGap.projectManage.dao.ProjectStepMapper" >
+  <resultMap id="BaseResultMap" type="com.linkGap.projectManage.model.entity.ProjectStep" >
+    <id column="stepId" property="stepId" jdbcType="INTEGER" />
+    <result column="projectType" property="projectType" jdbcType="CHAR" />
+    <result column="sysRoleId" property="sysRoleId" jdbcType="INTEGER" />
+    <result column="projectInfoId" property="projectInfoId" jdbcType="INTEGER" />
+    <result column="stepName" property="stepName" jdbcType="VARCHAR" />
+    <result column="stepOrder" property="stepOrder" jdbcType="INTEGER" />
+    <result column="stepPercent" property="stepPercent" jdbcType="DECIMAL" />
+    <result column="projectStatus" property="projectStatus" jdbcType="CHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="createUserId" property="createUserId" jdbcType="INTEGER" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="updateUserId" property="updateUserId" jdbcType="INTEGER" />
+    <result column="status" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="StepViewMap" type="com.linkGap.projectManage.model.view.ProjectStepView" >
+    <id column="stepId" property="stepId" jdbcType="INTEGER" />
+    <result column="sysRoleId" property="sysRoleId" jdbcType="INTEGER" />
+    <result column="stepName" property="stepName" jdbcType="VARCHAR" />
+    <result column="stepOrder" property="stepOrder" jdbcType="INTEGER" />
+    <result column="stepPercent" property="stepPercent" jdbcType="DECIMAL" />
+    <result column="projectStatus" property="projectStatus" jdbcType="CHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    stepId, projectType, sysRoleId, projectInfoId, stepName, stepOrder, stepPercent, 
+    projectStatus, createTime, createUserId, updateTime, updateUserId, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_step
+    where stepId = #{stepId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project_step
+    where stepId = #{stepId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.linkGap.projectManage.model.entity.ProjectStep" >
+    insert into project_step (stepId, projectType, sysRoleId, 
+      projectInfoId, stepName, stepOrder, 
+      stepPercent, projectStatus, createTime, 
+      createUserId, updateTime, updateUserId, 
+      status)
+    values (#{stepId,jdbcType=INTEGER}, #{projectType,jdbcType=CHAR}, #{sysRoleId,jdbcType=INTEGER}, 
+      #{projectInfoId,jdbcType=INTEGER}, #{stepName,jdbcType=VARCHAR}, #{stepOrder,jdbcType=INTEGER}, 
+      #{stepPercent,jdbcType=DECIMAL}, #{projectStatus,jdbcType=CHAR}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=INTEGER}, #{updateTime,jdbcType=TIMESTAMP}, #{updateUserId,jdbcType=INTEGER}, 
+      #{status,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linkGap.projectManage.model.entity.ProjectStep" >
+    insert into project_step
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="stepId != null" >
+        stepId,
+      </if>
+      <if test="projectType != null" >
+        projectType,
+      </if>
+      <if test="sysRoleId != null" >
+        sysRoleId,
+      </if>
+      <if test="projectInfoId != null" >
+        projectInfoId,
+      </if>
+      <if test="stepName != null" >
+        stepName,
+      </if>
+      <if test="stepOrder != null" >
+        stepOrder,
+      </if>
+      <if test="stepPercent != null" >
+        stepPercent,
+      </if>
+      <if test="projectStatus != null" >
+        projectStatus,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="createUserId != null" >
+        createUserId,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+      <if test="updateUserId != null" >
+        updateUserId,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="stepId != null" >
+        #{stepId,jdbcType=INTEGER},
+      </if>
+      <if test="projectType != null" >
+        #{projectType,jdbcType=CHAR},
+      </if>
+      <if test="sysRoleId != null" >
+        #{sysRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="projectInfoId != null" >
+        #{projectInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="stepName != null" >
+        #{stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepOrder != null" >
+        #{stepOrder,jdbcType=INTEGER},
+      </if>
+      <if test="stepPercent != null" >
+        #{stepPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="projectStatus != null" >
+        #{projectStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linkGap.projectManage.model.entity.ProjectStep" >
+    update project_step
+    <set >
+      <if test="projectType != null" >
+        projectType = #{projectType,jdbcType=CHAR},
+      </if>
+      <if test="sysRoleId != null" >
+        sysRoleId = #{sysRoleId,jdbcType=INTEGER},
+      </if>
+      <if test="projectInfoId != null" >
+        projectInfoId = #{projectInfoId,jdbcType=INTEGER},
+      </if>
+      <if test="stepName != null" >
+        stepName = #{stepName,jdbcType=VARCHAR},
+      </if>
+      <if test="stepOrder != null" >
+        stepOrder = #{stepOrder,jdbcType=INTEGER},
+      </if>
+      <if test="stepPercent != null" >
+        stepPercent = #{stepPercent,jdbcType=DECIMAL},
+      </if>
+      <if test="projectStatus != null" >
+        projectStatus = #{projectStatus,jdbcType=CHAR},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        createUserId = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateUserId != null" >
+        updateUserId = #{updateUserId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where stepId = #{stepId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linkGap.projectManage.model.entity.ProjectStep" >
+    update project_step
+    set projectType = #{projectType,jdbcType=CHAR},
+      sysRoleId = #{sysRoleId,jdbcType=INTEGER},
+      projectInfoId = #{projectInfoId,jdbcType=INTEGER},
+      stepName = #{stepName,jdbcType=VARCHAR},
+      stepOrder = #{stepOrder,jdbcType=INTEGER},
+      stepPercent = #{stepPercent,jdbcType=DECIMAL},
+      projectStatus = #{projectStatus,jdbcType=CHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=INTEGER},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      updateUserId = #{updateUserId,jdbcType=INTEGER},
+      status = #{status,jdbcType=CHAR}
+    where stepId = #{stepId,jdbcType=INTEGER}
+  </update>
+  
+  <select id="getProjectStepByProjectInfoId" resultMap="StepViewMap" parameterType="java.lang.Integer" >
+    select 
+    stepId, sysRoleId, stepName, stepOrder, stepPercent, projectStatus
+    from project_step
+    where status='1' and projectInfoId = #{projectInfoId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteStepByProjectInfoId" parameterType="java.lang.Integer" >
+    delete from project_step
+    where projectInfoId = #{projectInfoId,jdbcType=INTEGER}
+  </delete>
+  
+  <insert id="insertBatch" useGeneratedKeys="true" parameterType="java.util.List" >
+    insert into project_step (stepId, projectType, sysRoleId, 
+      projectInfoId, stepName, stepOrder, 
+      stepPercent, projectStatus, createTime, 
+      createUserId, updateTime, updateUserId, 
+      status)
+    values
+    <foreach collection="list" item="item" index="index" separator="," >  
+        (#{item.stepId,jdbcType=INTEGER}, #{item.projectType,jdbcType=CHAR}, #{item.sysRoleId,jdbcType=INTEGER}, 
+      #{item.projectInfoId,jdbcType=INTEGER}, #{item.stepName,jdbcType=VARCHAR}, #{item.stepOrder,jdbcType=INTEGER}, 
+      #{item.stepPercent,jdbcType=DECIMAL}, #{item.projectStatus,jdbcType=CHAR}, #{item.createTime,jdbcType=TIMESTAMP}, 
+      #{item.createUserId,jdbcType=INTEGER}, #{item.updateTime,jdbcType=TIMESTAMP}, #{item.updateUserId,jdbcType=INTEGER}, 
+      #{item.status,jdbcType=CHAR})  
+    </foreach>
+     
+  </insert>
+  
+  <update id="oprateStep">
+	  update project_step
+	    set
+	      projectStatus = '1',
+	      updateTime = now(),
+	      updateUserId = #{updateUserId,jdbcType=INTEGER}
+	    where stepId = #{stepId}
+  </update>
+  
+</mapper>

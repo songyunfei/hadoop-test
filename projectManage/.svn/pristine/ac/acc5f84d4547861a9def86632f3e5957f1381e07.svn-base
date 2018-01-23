@@ -1,0 +1,59 @@
+package com.linkGap.projectManage.service.impl;
+
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.linkGap.projectManage.dao.SysUserMapper;
+import com.linkGap.projectManage.model.entity.SysPermission;
+import com.linkGap.projectManage.model.entity.SysRole;
+import com.linkGap.projectManage.model.entity.SysUser;
+import com.linkGap.projectManage.model.view.ChangePasswdView;
+import com.linkGap.projectManage.service.SysUserService;
+@Service
+@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
+public class SysUserServiceImpl implements SysUserService {
+
+	@Autowired
+	private SysUserMapper sysUserMapper;
+	
+	public void updatePasswordByUserId(Map<String,Object> map) throws Exception {
+		sysUserMapper.updatePasswordByUserId(map);
+	}
+
+	@Override
+	public SysUser findByUserName(String userName) {
+		return sysUserMapper.findByUserName(userName);
+	}
+	
+
+	
+	@Override
+	public SysRole findRoleByUserId(int userId){
+		return sysUserMapper.findRoleByUserId(userId);
+	}
+
+	@Override
+	public int updatePasswdByUserName(SysUser user) {
+		// TODO Auto-generated method stub
+		return sysUserMapper.updatePasswdByUserName(user);
+	}
+
+	@Override
+	public ChangePasswdView getUserInfoByUserName(String userName) {
+		// TODO Auto-generated method stub
+		ChangePasswdView userInfoByUserNameObj = sysUserMapper.getUserInfoByUserName(userName);
+		String roleId =userInfoByUserNameObj.getRoleId();
+		if(!"".equals(roleId) && roleId!=null){
+			List<SysPermission> permissionByRoleId = sysUserMapper.getPermissionByRoleId(Integer.parseInt(roleId));
+			userInfoByUserNameObj.setMenus(permissionByRoleId);
+		}
+		return userInfoByUserNameObj;
+	}
+
+}

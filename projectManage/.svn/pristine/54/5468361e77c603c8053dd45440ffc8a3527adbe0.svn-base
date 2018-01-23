@@ -1,0 +1,17 @@
+package com.linkGap.projectManage.dao;
+
+import com.linkGap.projectManage.model.entity.CustomerPic;
+
+public interface CustomerPicMapper {
+    int deleteByPrimaryKey(Integer customerPicId);
+
+    int insert(CustomerPic record);
+
+    int insertSelective(CustomerPic record);
+
+    CustomerPic selectByPrimaryKey(Integer customerPicId);
+
+    int updateByPrimaryKeySelective(CustomerPic record);
+
+    int updateByPrimaryKey(CustomerPic record);
+}

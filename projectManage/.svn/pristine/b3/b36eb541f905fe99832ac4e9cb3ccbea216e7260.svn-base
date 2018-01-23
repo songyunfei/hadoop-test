@@ -1,0 +1,37 @@
+package com.linkGap.projectManage.dao;
+
+import java.util.List;
+
+import org.springframework.stereotype.Repository;
+
+import com.linkGap.projectManage.model.entity.ProjectInfo;
+import com.linkGap.projectManage.model.view.ProjectListCount;
+import com.linkGap.projectManage.model.view.ProjectListView;
+import com.linkGap.projectManage.model.view.ProjectRequestParams;
+
+@Repository
+public interface ProjectInfoMapper {
+    int deleteByPrimaryKey(Integer projectInfoId);
+
+    int insert(ProjectInfo record);
+
+    int insertSelective(ProjectInfo record);
+
+    ProjectInfo selectByPrimaryKey(Integer projectInfoId);
+
+    int updateByPrimaryKeySelective(ProjectInfo record);
+
+    int updateByPrimaryKey(ProjectInfo record);
+    /**
+     * 列表查询
+     * @author  songyunfei
+     * 2018年1月12日
+     */
+	List<ProjectListView> queryList(ProjectRequestParams params);
+    /**
+     * 根据条件查询各个状态下工程总数
+     * @author  songyunfei
+     * 2018年1月15日
+     */
+	List<ProjectListCount> getTotalByParams(ProjectRequestParams params);
+}

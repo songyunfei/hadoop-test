@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linkGap.projectManage.dao.ProjectStepLogsMapper" >
+  <resultMap id="BaseResultMap" type="com.linkGap.projectManage.model.entity.ProjectStepLogs" >
+    <id column="projectStepLogId" property="projectStepLogId" jdbcType="INTEGER" />
+    <result column="stepId" property="stepId" jdbcType="INTEGER" />
+    <result column="operateTitle" property="operateTitle" jdbcType="VARCHAR" />
+    <result column="operateContent" property="operateContent" jdbcType="VARCHAR" />
+    <result column="smallImageUrls" property="smallImageUrls" jdbcType="VARCHAR" />
+    <result column="imgUrls" property="imgUrls" jdbcType="VARCHAR" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="createUserId" property="createUserId" jdbcType="INTEGER" />
+    <result column="rectifyDate" property="rectifyDate" jdbcType="DATE" />
+    <result column="status" property="status" jdbcType="CHAR" />
+  </resultMap>
+  <resultMap id="LogViewMap" type="com.linkGap.projectManage.model.view.ProjectStepLogView" >
+    <id column="projectStepLogId" property="projectStepLogId" jdbcType="INTEGER" />
+    <result column="operateTitle" property="operateTitle" jdbcType="VARCHAR" />
+    <result column="operateContent" property="operateContent" jdbcType="VARCHAR" />
+    <result column="rectifyDate" property="rectifyDate" jdbcType="DATE" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    projectStepLogId, stepId, operateTitle, operateContent, smallImageUrls, imgUrls, 
+    createTime, createUserId, rectifyDate, status
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from project_step_logs
+    where projectStepLogId = #{projectStepLogId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from project_step_logs
+    where projectStepLogId = #{projectStepLogId,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.linkGap.projectManage.model.entity.ProjectStepLogs" >
+    insert into project_step_logs (projectStepLogId, stepId, operateTitle, 
+      operateContent, smallImageUrls, imgUrls, 
+      createTime, createUserId, rectifyDate, 
+      status)
+    values (#{projectStepLogId,jdbcType=INTEGER}, #{stepId,jdbcType=INTEGER}, #{operateTitle,jdbcType=VARCHAR}, 
+      #{operateContent,jdbcType=VARCHAR}, #{smallImageUrls,jdbcType=VARCHAR}, #{imgUrls,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{createUserId,jdbcType=INTEGER}, #{rectifyDate,jdbcType=DATE}, 
+      #{status,jdbcType=CHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.linkGap.projectManage.model.entity.ProjectStepLogs" >
+    insert into project_step_logs
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="projectStepLogId != null" >
+        projectStepLogId,
+      </if>
+      <if test="stepId != null" >
+        stepId,
+      </if>
+      <if test="operateTitle != null" >
+        operateTitle,
+      </if>
+      <if test="operateContent != null" >
+        operateContent,
+      </if>
+      <if test="smallImageUrls != null" >
+        smallImageUrls,
+      </if>
+      <if test="imgUrls != null" >
+        imgUrls,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="createUserId != null" >
+        createUserId,
+      </if>
+      <if test="rectifyDate != null" >
+        rectifyDate,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="projectStepLogId != null" >
+        #{projectStepLogId,jdbcType=INTEGER},
+      </if>
+      <if test="stepId != null" >
+        #{stepId,jdbcType=INTEGER},
+      </if>
+      <if test="operateTitle != null" >
+        #{operateTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="operateContent != null" >
+        #{operateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImageUrls != null" >
+        #{smallImageUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrls != null" >
+        #{imgUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="rectifyDate != null" >
+        #{rectifyDate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=CHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linkGap.projectManage.model.entity.ProjectStepLogs" >
+    update project_step_logs
+    <set >
+      <if test="stepId != null" >
+        stepId = #{stepId,jdbcType=INTEGER},
+      </if>
+      <if test="operateTitle != null" >
+        operateTitle = #{operateTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="operateContent != null" >
+        operateContent = #{operateContent,jdbcType=VARCHAR},
+      </if>
+      <if test="smallImageUrls != null" >
+        smallImageUrls = #{smallImageUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="imgUrls != null" >
+        imgUrls = #{imgUrls,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        createUserId = #{createUserId,jdbcType=INTEGER},
+      </if>
+      <if test="rectifyDate != null" >
+        rectifyDate = #{rectifyDate,jdbcType=DATE},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=CHAR},
+      </if>
+    </set>
+    where projectStepLogId = #{projectStepLogId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linkGap.projectManage.model.entity.ProjectStepLogs" >
+    update project_step_logs
+    set stepId = #{stepId,jdbcType=INTEGER},
+      operateTitle = #{operateTitle,jdbcType=VARCHAR},
+      operateContent = #{operateContent,jdbcType=VARCHAR},
+      smallImageUrls = #{smallImageUrls,jdbcType=VARCHAR},
+      imgUrls = #{imgUrls,jdbcType=VARCHAR},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=INTEGER},
+      rectifyDate = #{rectifyDate,jdbcType=DATE},
+      status = #{status,jdbcType=CHAR}
+    where projectStepLogId = #{projectStepLogId,jdbcType=INTEGER}
+  </update>
+  <select id="getLogByStepId" resultMap="LogViewMap" parameterType="java.lang.Integer" >
+    select 
+    projectStepLogId, operateTitle, operateContent, rectifyDate 
+    from project_step_logs
+    where status='1' and stepId = #{stepId,jdbcType=INTEGER}
+  </select>
+</mapper>

@@ -1,0 +1,39 @@
+# LOG4J\u914D\u7F6E
+log4j.rootCategory=DEBUG,errorfile,console
+log4j.rootCategory=DEBUG, file
+log4j.rootCategory=DEBUG, stdout
+log4j.additivity.com.linkGap = false
+log4j.category.com.linkGap=DEBUG,didifile
+log4j.logger.error=errorfile
+
+# \u63A7\u5236\u53F0\u8F93\u51FA
+log4j.appender.stdout=org.apache.log4j.ConsoleAppender
+log4j.appender.stdout.layout=org.apache.log4j.PatternLayout
+log4j.appender.stdout.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n
+
+# root\u65E5\u5FD7\u8F93\u51FA
+log4j.appender.file=org.apache.log4j.RollingFileAppender
+log4j.appender.file.MaxFileSize=500Mb
+log4j.appender.file.MaxBackupIndex=3
+log4j.appender.file.file=logs/all.log
+log4j.appender.file.DatePattern='.'yyyy-MM-dd
+log4j.appender.file.layout=org.apache.log4j.PatternLayout
+log4j.appender.file.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n
+
+# error\u65E5\u5FD7\u8F93\u51FA
+log4j.appender.errorfile=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.errorfile.file=logs/error.log
+log4j.appender.errorfile.DatePattern='.'yyyy-MM-dd
+log4j.appender.errorfile.Threshold = ERROR
+log4j.appender.errorfile.layout=org.apache.log4j.PatternLayout
+log4j.appender.errorfile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L - %m%n
+
+log4j.appender.didifile=org.apache.log4j.DailyRollingFileAppender
+log4j.appender.didifile.Threshold = DEBUG
+log4j.appender.didifile.file=logs/projectManage.log
+log4j.appender.didifile.DatePattern='.'yyyy-MM-dd
+log4j.appender.didifile.layout=org.apache.log4j.PatternLayout
+log4j.appender.didifile.layout.ConversionPattern=%d{yyyy-MM-dd HH:mm:ss,SSS} %5p %c{1}:%L ---- %m%n
+
+logging.level.org.spring.springboot.dao=DEBUG
+ 

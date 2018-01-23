@@ -1,0 +1,108 @@
+package com.linkGap.projectManage.security;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.Filter;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.tomcat.util.http.fileupload.servlet.ServletRequestContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.web.support.ServletContextApplicationContextInitializer;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
+import org.springframework.web.context.support.ServletContextResource;
+
+import com.linkGap.projectManage.dao.SysPermissionMapper;
+import com.linkGap.projectManage.dao.SysUserMapper;
+import com.linkGap.projectManage.model.entity.SysRole;
+import com.linkGap.projectManage.model.entity.SysUser;
+
+/**
+ * 根据当前用户获取其权限
+ * 
+ * @author renhengli
+ *
+ */
+@Service
+public class CustomUserService implements UserDetailsService{ // 自定义UserDetailsService
+	// 接口
+	@Autowired
+	SysUserMapper userDao;
+
+	@Autowired
+	SysPermissionMapper permissionDao;
+
+
+	/*
+	 * public UserDetails loadUserByUsername(String username) { SysUser user =
+	 * userDao.findByUserName(username); if (user != null) { List<SysPermission>
+	 * permissions = null; try { permissions =
+	 * permissionDao.findByAdminUserId(user.getSysUserId()); } catch (Exception
+	 * e) { e.printStackTrace(); } List<GrantedAuthority> grantedAuthorities =
+	 * new ArrayList<>(); for (SysPermission permission : permissions) { if
+	 * (permission != null && permission.getName() != null) {
+	 * 
+	 * GrantedAuthority grantedAuthority = new
+	 * SimpleGrantedAuthority(permission.getName());
+	 * grantedAuthorities.add(grantedAuthority); } } return new
+	 * User(user.getUsername(), user.getPassword(), grantedAuthorities); } else
+	 * { throw new UsernameNotFoundException("user: " + username +
+	 * " do not exist!"); } }
+	 */
+
+	public UserDetails loadUserByUsername(String username) {
+//		HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();  
+//		String serverName = request.getServerName();
+//        System.out.println("------------------------------"+serverName); 
+//        String secDomainName = "";
+//        if(serverName.indexOf(".") == -1){
+//        	secDomainName = "www";
+//        }else{
+//        	//获取二级域名
+//        	secDomainName = serverName.substring(0, serverName.indexOf("."));
+//        }
+//        //根据二级域名找到对应的客户下面的登录用户
+//        Map<String, String> map = new HashMap<String, String>();
+//		map.put("userName", username);
+//		map.put("secondDomain", secDomainName);
+//		SysUser user = userDao.findByUserNameAndSecondDomain(map);
+		SysUser user = userDao.findByUserName(username);
+		if (user != null) {
+			//List<SysRole> roles = null;
+			SysRole sysRole = new SysRole();
+			try {
+				//roles = userDao.findRoleByUserName(username);
+				sysRole = userDao.findRoleByUserId(user.getSysUserId());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
+			if (sysRole != null && sysRole.getName() != null) {
+				GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(sysRole.getName());
+				grantedAuthorities.add(grantedAuthority);
+			}
+//			for (SysRole role : roles) {
+//				if (role != null && role.getName() != null) {
+//					GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(role.getName());
+//					grantedAuthorities.add(grantedAuthority);
+//				}
+//			}
+			return new User(user.getUsername(), user.getPassword(), grantedAuthorities);
+		} else {
+			throw new UsernameNotFoundException("user: " + username + " do not exist!");
+		}
+	}
+
+}

@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linkGap.projectManage.dao.UserRelationMapper" >
+  <resultMap id="BaseResultMap" type="com.linkGap.projectManage.model.entity.UserRelation" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="sysUserId" property="sysUserId" jdbcType="INTEGER" />
+    <result column="customerId" property="customerId" jdbcType="INTEGER" />
+    <result column="customerShopId" jdbcType="INTEGER" property="customerShopId" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, sysUserId, customerId, customerShopId
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  
+   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from user_relation
+    where sysUserId = #{userId,jdbcType=INTEGER}
+  </select>
+  
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from user_relation
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.linkGap.projectManage.model.entity.UserRelation" useGeneratedKeys="true" keyProperty="id">
+    insert into user_relation (id, sysUserId, customerId, customerShopId
+      )
+    values (#{id,jdbcType=INTEGER}, #{sysUserId,jdbcType=INTEGER}, #{customerId,jdbcType=INTEGER}, #{customerShopId,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertBatch" parameterType="java.util.List" >
+    insert into user_relation (id, sysUserId, customerId) values
+    <foreach collection="list" item="item" index="index" separator="," > 
+     (#{item.id,jdbcType=INTEGER}, #{item.sysUserId,jdbcType=INTEGER}, #{item.customerId,jdbcType=INTEGER}
+      )
+     </foreach>
+  </insert>
+  <insert id="insertSelective" parameterType="com.linkGap.projectManage.model.entity.UserRelation" >
+    insert into user_relation
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="sysUserId != null" >
+        sysUserId,
+      </if>
+      <if test="customerId != null" >
+        customerId,
+      </if>
+      <if test="customerShopId != null">
+        customerShopId,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="sysUserId != null" >
+        #{sysUserId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerShopId != null">
+        #{customerShopId,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.linkGap.projectManage.model.entity.UserRelation" >
+    update user_relation
+    <set >
+      <if test="sysUserId != null" >
+        sysUserId = #{sysUserId,jdbcType=INTEGER},
+      </if>
+      <if test="customerId != null" >
+        customerId = #{customerId,jdbcType=INTEGER},
+      </if>
+      <if test="customerShopId != null">
+        customerShopId = #{customerShopId,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.linkGap.projectManage.model.entity.UserRelation" >
+    update user_relation
+    set sysUserId = #{sysUserId,jdbcType=INTEGER},
+      customerId = #{customerId,jdbcType=INTEGER},
+      customerShopId = #{customerShopId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

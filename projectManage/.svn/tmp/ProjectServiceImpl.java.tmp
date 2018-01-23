@@ -1,0 +1,135 @@
+package com.linkGap.projectManage.service.impl;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.linkGap.projectManage.dao.ProjectContactsMapper;
+import com.linkGap.projectManage.dao.ProjectInfoMapper;
+import com.linkGap.projectManage.dao.ProjectPicMapper;
+import com.linkGap.projectManage.model.ReturnResultUtil;
+import com.linkGap.projectManage.model.entity.ProjectContacts;
+import com.linkGap.projectManage.model.entity.ProjectInfo;
+import com.linkGap.projectManage.model.entity.ProjectPic;
+import com.linkGap.projectManage.model.view.ProjectInfoView;
+import com.linkGap.projectManage.model.view.ProjectListCount;
+import com.linkGap.projectManage.model.view.ProjectListView;
+import com.linkGap.projectManage.model.view.ProjectRequestParams;
+import com.linkGap.projectManage.service.ProjectService;
+@Service
+public class ProjectServiceImpl implements ProjectService {
+    
+	@Autowired
+	private ProjectInfoMapper  projectInfoMapper;
+	@Autowired
+	private ProjectContactsMapper projectContactsMapper;
+	@Autowired
+	private ProjectPicMapper   projectPicMapper;
+	/**
+	 * 列表查询
+	 */
+	@Override
+	public ReturnResultUtil queryList(ProjectRequestParams params) {
+		List<ProjectListView> list=projectInfoMapper.queryList(params);
+		ReturnResultUtil result=new ReturnResultUtil();
+		result.setResultValue(list);
+		Map<String,Integer> projectTypeMap=new HashMap<String,Integer>();
+		List<ProjectListCount> countlist=projectInfoMapper.getTotalByParams(params);
+		if(countlist!=null&&countlist.size()>0){
+			for (ProjectListCount projectListCount : countlist) {
+				if(projectListCount.getType().equals("1")){
+					 projectTypeMap.put("fordispatching", projectListCount.getCount());
+				}else if(projectListCount.getType().equals("2")){
+					 projectTypeMap.put("ongoing", projectListCount.getCount());
+				}else if(projectListCount.getType().equals("3")){
+					 projectTypeMap.put("completed", projectListCount.getCount());
+				}
+			}
+		}
+		result.setExtras(projectTypeMap);
+		return result;
+	}
+	/**
+	 * 添加工程
+	 */
+	@Override
+	public void saveProject(ProjectInfo projectInfo) {
+		
+		//设置工程基本参数
+		projectInfo.setCreateTime(new Date());
+		projectInfo.setUpdateTime(new Date());
+		projectInfo.setUpdateUserId(projectInfo.getCreateUserId());
+		projectInfo.setDeleted((byte)0);
+		projectInfo.setCurrentProgress("0");
+	    //工程状态判断
+		if(projectInfo.getSaleMan()!=null||projectInfo.getConstructLeader()!=null
+	      ||projectInfo.getSupervisor()!=null||projectInfo.getCustomerShopId()!=null
+	      ||projectInfo.getDesignMan()!=null){
+			projectInfo.setProjectStatus((byte) 2);
+		 }else{
+			projectInfo.setProjectStatus((byte) 1); 
+		 }
+		this.projectInfoMapper.insert(projectInfo);
+		 //合同图片
+		String constructionImageUrls=projectInfo.getConstructionImageUrls();
+		String constructionShortImageUrls=projectInfo.getConstructionShortImageUrls();
+		if(StringUtils.isNotEmpty(constructionImageUrls)&&StringUtils.isNotEmpty(constructionShortImageUrls)){
+			String[] constructionImage = constructionImageUrls.split(",");
+			String[] constructionShort =constructionShortImageUrls.split(",");
+			for (int i = 0; i < constructionImage.length; i++) {
+				 ProjectPic propic=new ProjectPic();
+				 propic.setCreateTime(new Date());
+				 propic.setCreateUserId(projectInfo.getCreateUserId());
+				 propic.setImgOrder(i);
+				 propic.setProjectInfoId(projectInfo.getProjectInfoId());
+				 propic.setStatus("1");
+				 propic.setType("1");
+				 propic.setImgUrls(constructionImage[i]);
+				 propic.setSmallImageUrls(constructionShort[i]);
+				 projectPicMapper.insert(propic);
+			}
+		 //施工图片	
+			String contractImageUrls = projectInfo.getContractImageUrls();
+			String contractShortImageUrls = projectInfo.getContractShortImageUrls();
+			if(StringUtils.isNotEmpty(contractImageUrls)&&StringUtils.isNotEmpty(contractShortImageUrls)){
+				 String[] contractUrls = contractImageUrls.split(",");
+				 String[] contractShortUrls = contractShortImageUrls.split(",");
+				for (int i = 0; i < contractUrls.length; i++) {
+					 ProjectPic propic=new ProjectPic();
+					 propic.setCreateTime(new Date());
+					 propic.setCreateUserId(projectInfo.getCreateUserId());
+					 propic.setImgOrder(i);
+					 propic.setProjectInfoId(projectInfo.getProjectInfoId());
+					 propic.setStatus("1");
+					 propic.setType("2");
+					 propic.setImgUrls(contractUrls[i]);
+					 propic.setSmallImageUrls(contractShortUrls[i]);
+					 projectPicMapper.insert(propic);
+				}	
+		}
+		//添加工程联系人
+		List<ProjectContacts> projectContacts = projectInfo.getProjectContacts();
+		if(projectContacts!=null&&projectContacts.size()>0){
+			for (ProjectContacts projectContacts2 : projectContacts) {
+				projectContacts2.setCreateTime(new Date());
+				projectContacts2.setCreateUserId(projectInfo.getCreateUserId());
+				projectContacts2.setProjectInfoId(projectInfo.getProjectInfoId());
+				projectContacts2.setStatus("1");
+				projectContacts2.setUpdateTime(new Date());
+				projectContacts2.setUpdateUserId(projectInfo.getCreateUserId());
+				projectContactsMapper.insert(projectContacts2);
+			}
+		  }
+	    }
+	  }
+	
+	@Override
+	public ProjectInfoView selectByProjectId(Integer projectInfoId) {
+		return projectInfoMapper.selectByProjectId(projectInfoId);
+	}
+}

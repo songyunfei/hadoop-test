@@ -1,0 +1,17 @@
+package com.linkGap.projectManage.dao;
+
+import com.linkGap.projectManage.model.entity.ProjectInfo;
+
+public interface ProjectInfoMapper {
+    int deleteByPrimaryKey(Integer projectInfoId);
+
+    int insert(ProjectInfo record);
+
+    int insertSelective(ProjectInfo record);
+
+    ProjectInfo selectByPrimaryKey(Integer projectInfoId);
+
+    int updateByPrimaryKeySelective(ProjectInfo record);
+
+    int updateByPrimaryKey(ProjectInfo record);
+}

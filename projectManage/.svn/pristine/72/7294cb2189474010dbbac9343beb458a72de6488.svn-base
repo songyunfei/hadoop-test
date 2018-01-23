@@ -1,0 +1,10 @@
+package com.linkGap.projectManage.service;
+
+import com.linkGap.projectManage.model.ReturnResultUtil;
+import com.linkGap.projectManage.model.view.ProjectRequestParams;
+
+public interface ProjectService {
+
+	ReturnResultUtil queryList(ProjectRequestParams params);
+
+}

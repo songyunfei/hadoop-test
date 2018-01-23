@@ -1,0 +1,106 @@
+package com.linkGap.projectManage.controller;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.linkGap.projectManage.anotation.OperationLogAnotation;
+import com.linkGap.projectManage.model.ActiveUser;
+import com.linkGap.projectManage.model.ReturnResultUtil;
+import com.linkGap.projectManage.model.entity.SysUser;
+import com.linkGap.projectManage.service.SysUserService;
+import com.linkGap.projectManage.utils.MD5Util;
+
+@Controller
+@RequestMapping("/sysUser")
+public class SysUserController {
+	
+	private Logger logger = Logger.getLogger(SysUserController.class);
+	
+	
+	@Autowired
+	private SysUserService sysUserService;
+	
+	
+	/**
+	 * 判断密码是否正确
+	 * 
+	 * @param oldPassword
+	 * @return ReturnResultUtil
+	 */
+	@RequestMapping(value="/checkPassword",method=RequestMethod.GET)
+	@ResponseBody
+	public ReturnResultUtil checkPassword(@RequestParam(value="oldPassword")String oldPassword, HttpServletRequest request){
+		ReturnResultUtil returnResultUtil=new ReturnResultUtil();
+		try {
+			//获取用户登陆信息
+			ActiveUser user = (ActiveUser)request.getSession().getAttribute("activeUser");
+			if(user == null){
+				returnResultUtil.setResultCode("03");
+				returnResultUtil.setResultMsg("用户未登陆");
+			}else{
+				SysUser sysUser = sysUserService.findByUserName(user.getUsername());
+				if(MD5Util.encode(oldPassword, 2).equals(sysUser.getPassword())){
+					returnResultUtil.setResultCode("00");
+					returnResultUtil.setResultValue(true);
+				}else{
+					returnResultUtil.setResultCode("02");
+					returnResultUtil.setResultMsg("原密码不正确");
+				}
+			}
+		} catch (Exception e) {
+			returnResultUtil.setResultCode("01");
+			returnResultUtil.setResultMsg(e.toString());
+			logger.error("判断密码是否正确失败！", e);
+			e.printStackTrace();
+		}
+		return returnResultUtil;
+	}
+	
+	
+	/**
+	 * 更新用户密码
+	 * 
+	 * @param newPassword
+	 * @return ReturnResultUtil
+	 */
+	@OperationLogAnotation(moduleName="更新用户密码",operation="更新用户密码")
+	@RequestMapping(value="/updatePassword",method=RequestMethod.POST)
+	@ResponseBody
+	public ReturnResultUtil updatePassword(@RequestParam(value="newPassword")String newPassword, HttpServletRequest request){
+		ReturnResultUtil returnResultUtil=new ReturnResultUtil();
+		Map<String, Object> map = new HashMap<>();
+		try {
+			//获取用户登陆信息
+			ActiveUser user = (ActiveUser)request.getSession().getAttribute("activeUser");
+			if(user == null){
+				returnResultUtil.setResultCode("01");
+				returnResultUtil.setResultMsg("用户未登陆");
+			}else{
+				SysUser sysUser = sysUserService.findByUserName(user.getUsername());
+				map.put("sysUserId", user.getUserid());
+				map.put("password", MD5Util.encode(newPassword, 2));
+				sysUserService.updatePasswordByUserId(map);
+				returnResultUtil.setResultCode("00");
+				returnResultUtil.setResultValue(true);
+			}
+		} catch (Exception e) {
+			returnResultUtil.setResultCode("01");
+			returnResultUtil.setResultMsg("更新用户密码失败！");
+			logger.error("更新用户密码失败！", e);
+			e.printStackTrace();
+		}
+		return returnResultUtil;
+	}
+	
+
+}

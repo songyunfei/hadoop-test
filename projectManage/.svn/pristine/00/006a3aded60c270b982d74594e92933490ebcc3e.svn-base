@@ -1,0 +1,17 @@
+package com.linkGap.projectManage.dao;
+
+import com.linkGap.projectManage.model.entity.ProjectHandoverDetail;
+
+public interface ProjectHandoverDetailMapper {
+    int deleteByPrimaryKey(Integer projectHandoverDetailId);
+
+    int insert(ProjectHandoverDetail record);
+
+    int insertSelective(ProjectHandoverDetail record);
+
+    ProjectHandoverDetail selectByPrimaryKey(Integer projectHandoverDetailId);
+
+    int updateByPrimaryKeySelective(ProjectHandoverDetail record);
+
+    int updateByPrimaryKey(ProjectHandoverDetail record);
+}

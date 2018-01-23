@@ -1,0 +1,23 @@
+package com.linkGap.projectManage.service.impl;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.linkGap.projectManage.dao.ProjectInfoMapper;
+import com.linkGap.projectManage.model.view.ProjectListView;
+import com.linkGap.projectManage.model.view.ProjectRequestParams;
+import com.linkGap.projectManage.service.ProjectService;
+@Service
+public class ProjectServiceImpl implements ProjectService {
+    
+	@Autowired
+	private ProjectInfoMapper  projectInfoMapper;
+	@Override
+	public List<ProjectListView> queryList(ProjectRequestParams params) {
+		List<ProjectListView> list=projectInfoMapper.queryList(params);
+		return list;
+	}
+
+}

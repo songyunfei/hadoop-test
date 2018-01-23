@@ -1,0 +1,112 @@
+package com.linkGap.projectManage.service.impl;
+
+import java.io.UnsupportedEncodingException;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Isolation;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.linkGap.projectManage.dao.LoginLogMapper;
+import com.linkGap.projectManage.dao.SysUserMapper;
+import com.linkGap.projectManage.model.entity.LoginLog;
+import com.linkGap.projectManage.model.entity.SysPermission;
+import com.linkGap.projectManage.model.entity.SysRole;
+import com.linkGap.projectManage.model.entity.SysUser;
+import com.linkGap.projectManage.model.view.ChangePasswdView;
+import com.linkGap.projectManage.model.view.UserInfoView;
+import com.linkGap.projectManage.model.view.UserParamView;
+import com.linkGap.projectManage.model.view.UserView;
+import com.linkGap.projectManage.service.SysUserService;
+import com.linkGap.projectManage.utils.AddressUtils;
+
+@Service
+@Transactional(isolation = Isolation.DEFAULT, propagation = Propagation.REQUIRED)
+public class SysUserServiceImpl implements SysUserService {
+
+	@Autowired
+	private SysUserMapper sysUserMapper;
+
+	@Autowired
+	private LoginLogMapper loginLogMapper;
+
+	public void updatePasswordByUserId(Map<String, Object> map) throws Exception {
+		sysUserMapper.updatePasswordByUserId(map);
+	}
+
+	@Override
+	public SysUser findByUserName(String userName) {
+		return sysUserMapper.findByUserName(userName);
+	}
+	@Override
+	public SysRole findRoleByUserId(int userId) {
+		return sysUserMapper.findRoleByUserId(userId);
+	}
+
+	@Override
+	public int updatePasswdByUserName(SysUser user) {
+		// TODO Auto-generated method stub
+		return sysUserMapper.updatePasswdByUserName(user);
+	}
+
+	@Override
+	public ChangePasswdView getUserInfoByUserName(String userName) {
+		// TODO Auto-generated method stub
+		ChangePasswdView userInfoByUserNameObj = sysUserMapper.getUserInfoByUserName(userName);
+		String roleId = userInfoByUserNameObj.getRoleId();
+		if (!"".equals(roleId) && roleId != null) {
+			List<SysPermission> permissionByRoleId = sysUserMapper.getPermissionByRoleId(Integer.parseInt(roleId));
+			userInfoByUserNameObj.setMenus(permissionByRoleId);
+		}
+		return userInfoByUserNameObj;
+	}
+
+	@Override
+	public UserView getUserRoleInfo(Integer userId) {
+		// TODO Auto-generated method stub
+		return sysUserMapper.getUserRoleInfo(userId);
+	}
+
+	@Override
+	public List<UserInfoView> getKindsUserRoleList(UserParamView view) {
+		// TODO Auto-generated method stub
+		return sysUserMapper.getKindsUserRoleList(view);
+	}
+
+	@Override
+	public int saveLoginLog(int userId, String uniqueDeviceIdentifier, String ip) {
+		LoginLog record = new LoginLog();
+		record.setSysUserId(userId);
+		String address = "";
+		try {
+			 address = AddressUtils.getAddresses("ip=" + ip, "utf-8");
+			 record.setLoginAddress(address);
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		record.setLoginTime(new Date());
+		record.setLoginIp(ip);
+		record.setUniqueDeviceIdentifier(uniqueDeviceIdentifier);
+		return loginLogMapper.insert(record);
+	}
+	
+    /**
+     * 
+    * @Title: selectLastBySysUserId  
+    * @Description: 获取用户的最后一次登录记录 
+    * @param sysUserId
+    * @return    参数  
+    * LoginLog    返回类型
+     */
+    public LoginLog selectLastBySysUserId(Integer sysUserId){
+    	return loginLogMapper.selectLastBySysUserId(sysUserId);
+    }
+	@Override
+	public int updateMobileBySysUserId(SysUser user) {
+		return sysUserMapper.updateMobileBySysUserId(user);
+	}
+}

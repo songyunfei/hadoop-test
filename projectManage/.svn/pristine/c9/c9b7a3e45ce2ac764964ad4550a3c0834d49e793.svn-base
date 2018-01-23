@@ -1,0 +1,43 @@
+package com.linkGap.projectManage.service;
+
+import java.util.List;
+import java.util.Map;
+
+import com.linkGap.projectManage.model.entity.SysPermission;
+import com.linkGap.projectManage.model.entity.SysRole;
+import com.linkGap.projectManage.model.entity.SysUser;
+import com.linkGap.projectManage.model.view.ChangePasswdView;
+
+/**
+ * 系统用户管理
+ * 
+ * @author cxh
+ *
+ */
+public interface SysUserService {
+	
+	
+	
+	SysUser findByUserName(String userName);
+
+	
+	SysRole findRoleByUserId(int userId);
+	
+	
+	 /**
+     * @author lichen
+     * 通过用户名进行密码的修改操作
+     * @param user
+     * @return
+     */
+    int updatePasswdByUserName(SysUser user);
+    
+    /**
+     * @author lichen
+     * 通过用户名获得修改密码成功后的返回信息
+     * @param userName
+     * @return
+     */
+    ChangePasswdView getUserInfoByUserName(String userName);
+    
+}

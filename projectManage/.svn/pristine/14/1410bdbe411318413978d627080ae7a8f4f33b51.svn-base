@@ -1,0 +1,302 @@
+package com.linkGap.projectManage.controller;
+
+//import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
+
+import org.apache.log4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
+@Controller
+public class HomeController {
+	private Logger logger = Logger.getLogger(HomeController.class);
+
+	//@Autowired
+	//private RedisUtils redisUtils;
+
+	//@Autowired
+	//private JavaMailSender mailSender;
+
+	//@Autowired
+	//private UserService userService;
+
+	@Value("${upload.image.path}")
+	private String imageUploadPath;
+
+	//@Autowired
+	//private SysUserService sysUserService;
+
+	//@Autowired
+	//private AuthenticationManager authenticationManager;
+
+	@Value("${fastLogin.password}")
+	private String fastLoginPassword;
+	
+	@Value("${environment.active}")
+	private String environment;
+	/**
+	 * 验证redis缓存
+	 * 
+	 * @param map
+	 * @return
+	 */
+	// @RequestMapping(value = "/", method = RequestMethod.GET)
+	@GetMapping(value = { "/", "/home" })
+	public String index(ModelMap map,HttpServletRequest request) {
+		// try {
+		// StringBuffer sb = new StringBuffer();
+		// redisUtils.set("str", "str");
+		// sb.append("str=").append(redisUtils.get("str").toString()).append(",");
+		// redisUtils.hmSet("hmset", "key", "val");
+		// sb.append("hmset=").append(redisUtils.hmGet("hmset",
+		// "key")).append(",");
+		// redisUtils.lPush("list", "val");
+		// sb.append("list=").append(redisUtils.lRange("list", 0,
+		// 1).toString()).append(",");
+		// redisUtils.add("set", "val");
+		// sb.append("set=").append(redisUtils.setMembers("set").toString()).append(",");
+		// redisUtils.zAdd("zset", "val1", 1);
+		// redisUtils.zAdd("zset", "val2", 2);
+		// sb.append("zset=").append(redisUtils.rangeByScore("zset", 1,
+		// 2)).append(",");
+		//
+		// User user = userService.findByUserName("renhengli");
+		// map.addAttribute("name", user.getUserName());
+		// logger.debug(imageUploadPath);
+		// logger.info("输出info");
+		// logger.debug("输出debug");
+		// logger.error("输出error");
+		//
+		// } catch (Exception e) {
+		// e.printStackTrace();
+		// }
+		request.getSession().setAttribute("fastLoginPassword", fastLoginPassword); 
+		request.getSession().setAttribute("environment", environment); 
+		return "home";
+	}
+
+	/**
+	 * 验证mybatis 注解格式sql写法
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping("/findAllUser")
+//	@ResponseBody
+//	public List<User> findAllUser() throws Exception {
+//		return userService.findAll();
+//	}
+
+	/**
+	 * 验证缓存
+	 * 
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping("/findByUserName")
+//	@ResponseBody
+//	public User findByUserName(String userName) throws Exception {
+//		return userService.findByUserName(userName);
+//	}
+
+	/**
+	 * 验证mybatis 注解格式sql写法
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping("/findAll")
+//	@ResponseBody
+//	public List<User> findAll() throws Exception {
+//		return userService.findAllUser();
+//	}
+
+	/**
+	 * 验证mybatis xml格式sql写法
+	 * 
+	 * @param page
+	 * @param rows
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping("/findUserPage")
+//	@ResponseBody
+//	public EUDataGridResult findUserPage(Integer page, Integer rows) throws Exception {
+//		// 创建一个返回值对象
+//		EUDataGridResult result = userService.findUserPage(page, rows);
+//		return result;
+//	}
+
+	/**
+	 * 验证mybatis xml格式sql写法
+	 * 
+	 * @param page
+	 * @param rows
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping("/findUserPageInfo")
+//	@ResponseBody
+//	public PageInfo<User> findUserPageInfo(Integer page, Integer rows) throws Exception {
+//		// 创建一个返回值对象
+//		PageInfo<User> result = userService.findUserPageInfo(page, rows);
+//		return result;
+//	}
+
+	/**
+	 * 验证自定义全局异常
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping("/hello1")
+//	public String hello1() throws Exception {
+//		throw new Exception("发生错误");
+//	}
+
+	/**
+	 * 验证自定义全局异常
+	 * 
+	 * @return
+	 * @throws projectManageException
+	 */
+//	@RequestMapping("/json")
+//	public String json() throws projectManageException {
+//		throw new projectManageException("发生错误2");
+//	}
+
+	/**
+	 * 验证邮件发送
+	 * 
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping(value = "sendMail", method = RequestMethod.GET)
+//	@ResponseBody
+//	public String sendMail() throws Exception {
+//		MimeMessage mimeMessage = mailSender.createMimeMessage();
+//		MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
+//		helper.setFrom("renhengli@linkgap.com");
+//		helper.setTo("985602166@qq.com");
+//		helper.setSubject("主题：嵌入静态资源");
+//		helper.setText("<html><body><img src=\"cid:weixin\" ></body></html>", true);
+//		FileSystemResource file = new FileSystemResource(new File("src/main/resources/static/img/weixin.jpg"));
+//		helper.addInline("weixin", file);
+//		mailSender.send(mimeMessage);
+//		return "success";
+//
+//	}
+
+	/**
+	 * 验证事务
+	 * 
+	 * @param user
+	 * @return
+	 */
+//	@RequestMapping("/transaction")
+//	@ResponseBody
+//	public String transaction(User user) {
+//		try {
+//			int i = userService.save(user);
+//			logger.info(i);
+//			return "success";
+//		} catch (Exception e) {
+//			logger.error(e);
+//			return "error";
+//		}
+//	}
+
+	/**
+	 * 验证更新用户信息后，缓存自动清除
+	 * 
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
+//	@RequestMapping("/findByUserName1")
+//	@ResponseBody
+//	@OperationLogAnotation(moduleName = "查询用户信息", operation = "根据用户名查询用户信息")
+//	public User findByUserName1(String userName, int password) throws Exception {
+//		return userService.findByUserName1(userName);
+//	}
+
+	/**
+	 * 验证更新用户信息后，缓存自动清除
+	 * 
+	 * @param userName
+	 * @param age
+	 * @return
+	 */
+//	@RequestMapping("/update")
+//	@ResponseBody
+//	public String transaction(String userName, Integer age) {
+//		try {
+//			int i = userService.update(new User(3, "renhengli", "renhengli_update@linkgap.com", 21));
+//			logger.info(i);
+//			return "success";
+//		} catch (Exception e) {
+//			logger.error(e);
+//			return "error";
+//		}
+//	}
+
+	@RequestMapping(value = "/login", method = RequestMethod.GET)
+	//@OperationLogAnotation(moduleName = "登录页", operation = "跳转登录页")
+	public String login() {
+		return "login";
+	}
+
+//	@RequestMapping("/hello")
+//	public String hello() {
+//		return "hello";
+//	}
+//
+//	@RequestMapping("admin")
+//	@ResponseBody
+//	@PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+//	public String hello2() {
+//		return "hello admin";
+//	}
+
+	@GetMapping("/403")
+	public String error403() {
+		return "403";
+	}
+
+//	@PostMapping("/judgeIfUserExist")
+//	@ResponseBody
+//	public ReturnResultUtil judgeIfUserExist() {
+//		// TODO 判断用户是否存在，根据当前域名下的所有用户查重
+//		return new ReturnResultUtil();
+//	}
+
+	// @PostMapping("/fastLogin")
+	// @PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_LINKGAP','ROLE_SWS')")
+	// @ResponseBody
+	// public ReturnResultUtil fastLogin(String username, HttpServletRequest
+	// request) {
+	// SecurityContextHolder.getContext().getAuthentication().setAuthenticated(false);
+	// ActiveUser activeUser = sysUserService.fastLogin(username);
+	// if(activeUser == null ){
+	// return new ReturnResultUtil("01", "快速登录失败");
+	// }
+	// //Authentication token = new
+	// UsernamePasswordAuthenticationToken(username, "fastLogin@@@",);
+	// //token.setAuthenticated(true );
+	// //token = authenticationManager.authenticate(token); // 登陆
+	// //SecurityContextHolder.getContext().setAuthentication(token);
+	// SecurityContextHolder.getContext().getAuthentication().setAuthenticated(true);
+	// request.getSession().setAttribute("activeUser", activeUser);
+	// return new ReturnResultUtil("00", "快速登录成功");
+	// }
+
+//	@GetMapping("/fastLogin")
+//	public String fastLogin() {
+//		return "fastLogin";
+//	}
+}

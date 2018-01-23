@@ -1,0 +1,31 @@
+package com.linkGap.projectManage.service;
+
+import java.util.Map;
+
+import com.linkGap.projectManage.model.entity.SysRole;
+import com.linkGap.projectManage.model.entity.SysUser;
+
+/**
+ * 系统用户管理
+ * 
+ * @author cxh
+ *
+ */
+public interface SysUserService {
+	
+	/**
+	 * 更新用户密码
+	 */
+	void updatePasswordByUserId(Map<String, Object> map) throws Exception;
+	
+	
+	SysUser findByUserName(String userName);
+	
+	
+	void deleteByUserName(Map map) throws Exception;
+	
+	SysRole findRoleByUserId(int userId);
+	
+	
+
+}

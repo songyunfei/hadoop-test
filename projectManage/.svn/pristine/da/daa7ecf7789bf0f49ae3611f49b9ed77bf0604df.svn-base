@@ -1,0 +1,73 @@
+spring:
+  profiles:
+    active: test
+  application:
+    name: projectManage
+  output:
+    ansi:
+      enabled: DETECT #控制台多彩输出
+  thymeleaf:
+    enabled: true # 是否启用thymeleaf模板解析
+    cache: false # 是否开启模板缓存（建议：开发环境下设置为false，生产环境设置为true）
+    check-template-location: true
+    content-type: text/html; charset=utf-8
+    encoding: UTF-8
+    prefix: classpath:/templates/
+    suffix: .html
+#  mail:
+#    host: smtp.exmail.qq.com
+#    username: renhengli@linkgap.com
+#    password: Rhl6925687
+  devtools:
+    restart:
+      exclude: static/**
+  http:
+    encoding:
+      force: true
+      charset: UTF-8
+server:
+  port: 8888
+  tomcat:
+    uri-encoding: UTF-8
+  session:
+    timeout: 1800
+    persistent: false #重启时是否持久化session
+  #compression:
+  #  enabled: true #开启压缩
+  #context-path: /projectManage
+#actutor start
+endpoints:
+  shutdown:
+    enabled: true #启用shutdown
+    sensitive: false #禁用shutdown安全验证
+    id: projectManage_close
+  health:
+    sensitive: false
+  env:
+    sensitive: false
+  metrics:
+    sensitive: false
+  trace:
+    sensitive: false
+management: 
+  security:
+    enabled: true
+  context-path: /projectManage_manage
+  #port: 8888
+  address: 127.0.0.1  
+#security: 
+#  user:
+#    name: admin
+#    password: admin
+mybatis:
+  type-aliases-package: com.linkGap.projectManage.model
+  mapper-locations: classpath:mapper/*.xml
+fastLogin:
+  password: e4c6cc8648aea1a0b37a444274e37152
+#pagehelper:
+#  auto-runtime-dialect: true
+#  auto-dialect: true
+#  helper-dialect: mysql
+#  reasonable: true
+#  support-methods-arguments: true
+#  params: count=countSql  

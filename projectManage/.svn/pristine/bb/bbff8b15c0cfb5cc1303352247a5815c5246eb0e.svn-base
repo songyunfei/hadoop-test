@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.linkGap.projectManage.dao.SysUserMapper">
+	<resultMap id="BaseResultMap" type="sysUser">
+		<id column="sysUserId" property="sysUserId" jdbcType="INTEGER" />
+		<result column="username" property="username" jdbcType="VARCHAR" />
+		<result column="password" property="password" jdbcType="VARCHAR" />
+		<!-- <result column="secondDomain" property="secondDomain" jdbcType="VARCHAR" /> -->
+		<result column="locked" property="locked" jdbcType="CHAR" />
+	</resultMap>
+
+
+	<select id="findByUserName" parameterType="string" resultMap="BaseResultMap">
+		SELECT
+			sysUserId,
+			username,
+			password,
+			locked
+		FROM
+			sys_user
+		WHERE    locked = '1' 
+			and  username=#{userName}
+	</select>
+	
+	<select id="findRoleByUserName" parameterType="string" resultType="com.linkGap.projectManage.model.entity.SysRole">
+		SELECT
+			c.*
+		FROM
+			sys_user a left join sys_role_user b on a.sysUserId = b.sysUserId
+			left join sys_role c on b.sysRoleId = c.sysRoleId 
+		WHERE
+			a.username=#{userName}
+	</select>
+	
+	<insert id="insert" parameterType="com.linkGap.projectManage.model.entity.SysUser">
+	    insert into sys_user (sysUserId, username, password, locked) 
+	    values (#{sysUserId,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},  #{locked,jdbcType=CHAR})
+    </insert>
+    
+    <insert id="insertBatch"  parameterType="java.util.List" >
+	    insert into sys_user (sysUserId, username, password, locked) values
+	    <foreach collection="list" item="item" index="index" separator="," > 
+	    	 (#{item.sysUserId,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.password,jdbcType=VARCHAR},  #{item.locked,jdbcType=CHAR})
+	    </foreach>
+    </insert>
+  
+  	<select id="selectLastId" resultType="int">  
+        select LAST_INSERT_ID()   
+  	</select>
+
+	<select id="getIdsByUserName" parameterType="java.util.List" resultMap="BaseResultMap">
+		SELECT
+			sysUserId, username
+		FROM
+			sys_user
+		where locked = '1' and username in
+		<foreach item="item" index="index" collection="list"
+     		 open="(" separator="," close=")">
+        	#{item}
+  		</foreach>
+  		  order by field(  
+      	username,  
+       <foreach item="item" index="index" collection="list"
+     		 separator=","   >  
+        #{item}    
+       </foreach>   
+       )	  
+	</select>
+	
+		<select id="findByUserNameAndSecondDomain" parameterType="map" resultMap="BaseResultMap">
+		SELECT
+			sysUserId,
+			username,
+			password,
+			locked
+		FROM
+			sys_user 
+		<where>
+		locked = '1'
+			<if test="userName != null" >
+	        	and username=#{userName}
+	      	</if>
+	      	<!-- <if test="secondDomain != null" >
+	        	and secondDomain=#{secondDomain}
+	      	</if> -->
+		</where>
+	</select>
+	
+	<select id="findRoleByUserId" parameterType="int" resultType="com.linkGap.projectManage.model.entity.SysRole">
+		SELECT
+			c.*
+		FROM
+			sys_user a left join sys_role_user b on a.sysUserId = b.sysUserId
+			left join sys_role c on b.sysRoleId = c.sysRoleId
+		WHERE
+			a.sysUserId=#{userId}
+	</select>
+	
+	<update id="updatePasswordByUserId" parameterType="map" >
+    update sys_user
+    set password = #{password,jdbcType=VARCHAR}
+    where sysUserId = #{sysUserId,jdbcType=INTEGER}
+  </update>
+  
+  <update id="deleteByUserName"  parameterType="map" >
+    update sys_user
+    set locked = '2'
+    where 1=1
+    <if test="userName != null" >
+    and username=#{userName}
+    </if>
+     <if test="sysUserId != null" >
+    and sysUserId = #{sysUserId,jdbcType=INTEGER}
+    </if>
+  </update>
+</mapper>
