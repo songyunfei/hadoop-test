@@ -1,7 +1,0 @@
-package com.linkGap.projectManage.service.impl;
-
-import com.linkGap.projectManage.service.ProjectService;
-
-public class ProjectServiceImpl implements ProjectService {
-
-}
